@@ -11,45 +11,47 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/PROJECT/Java/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.base.jar">
+	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.base.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/PROJECT/Java/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.controls.jar">
+	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.controls.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/PROJECT/Java/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.fxml.jar">
+	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.fxml.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/PROJECT/Java/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.graphics.jar">
+	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.graphics.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/PROJECT/Java/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.media.jar">
+	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.media.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/PROJECT/Java/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.swing.jar">
+	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.swing.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/PROJECT/Java/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.web.jar">
+	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx.web.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/PROJECT/Java/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx-swt.jar">
+	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/javafx/lib/javafx-swt.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/javax.json/javax.json-1.0.jar"/>
+	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/JDBC-driver-for-mysql/mysql-connector-java-5.1.40-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

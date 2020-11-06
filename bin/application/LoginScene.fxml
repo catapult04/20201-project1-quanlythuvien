@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="325.0" prefWidth="524.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="application.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="297.0" prefWidth="568.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
    <children>
-      <Button fx:id="myButton" onAction="#showDateTime" layoutX="34.0" layoutY="26.0" mnemonicParsing="false" text="Show date and time now" />
-      <TextField fx:id="myTextField" layoutX="33.0" layoutY="74.0" prefHeight="31.0" prefWidth="263.0" />
+      <TextField layoutX="309.0" layoutY="77.0" prefHeight="31.0" prefWidth="245.0" promptText="Tên đăng nhập:" />
+      <TextField layoutX="309.0" layoutY="121.0" prefHeight="31.0" prefWidth="245.0" promptText="Mật khẩu:" />
+      <Button fx:id="btnLogin" onAction="#onLogin" layoutX="309.0" layoutY="171.0" mnemonicParsing="false" text="Đăng nhập" />
+      <Text layoutX="350.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ĐĂNG NHẬP HỆ THỐNG" />
+      <Text layoutX="445.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quên mật khẩu?" />
+      <Text layoutX="402.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đăng kí tài khoản mới?" />
    </children>
 </Pane>

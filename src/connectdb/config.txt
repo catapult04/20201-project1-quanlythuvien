@@ -1,0 +1,9 @@
+{
+    "dbURL":"jdbc:mysql://localhost:3306/qlthuviendb",
+    "username":"root",
+    "password":"",
+    "dbname":"qlthuviendb",
+    "tablename":"sach_minhhn",
+    "host":"localhost",
+    "port":"3306"
+}

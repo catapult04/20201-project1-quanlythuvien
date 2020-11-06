@@ -10,6 +10,8 @@ import javafx.scene.layout.BorderPane;
 /*
  * 1.Build path for project: 	add all jar files in javafx/lib to Modules path
  * 2.Set run configuration for main method: Arguments -> VM Arguments:	   --module-path "\\paste path to folder where save jar files" --add-modules javafx.controls,javafx.fxml
+ * --module-path "D:\20201\Project I\mylib\javafx\lib" --add-modules javafx.controls,javafx.fxml
+ * 
  * 3.In each fxml file, add:
  *   + fx:controller="application.Controller"  for Container
  *   + fx:id="..."  for elements that need controlled
@@ -22,11 +24,11 @@ public class MainQLTV extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			// Đọc file fxml và vẽ giao diện.
-	        Parent loginScene = FXMLLoader.load(getClass() .getResource("/application/LoginScene.fxml"));
+	        Scene loginScene = new Scene(FXMLLoader.load(getClass() .getResource("/application/LoginScene.fxml")));
 			//loginScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
 			primaryStage.setTitle("Quản lý thư viện");
-			primaryStage.setScene(new Scene(loginScene));
+			primaryStage.setScene(loginScene);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
