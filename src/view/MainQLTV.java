@@ -1,4 +1,4 @@
-package application;
+package view;
 	
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +24,7 @@ public class MainQLTV extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			// Đọc file fxml và vẽ giao diện.
-	        Scene loginScene = new Scene(FXMLLoader.load(getClass() .getResource("/application/LoginScene.fxml")));
+	        Scene loginScene = new Scene(FXMLLoader.load(getClass() .getResource("/view/LoginScene.fxml")));
 			//loginScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
 			primaryStage.setTitle("Quản lý thư viện");

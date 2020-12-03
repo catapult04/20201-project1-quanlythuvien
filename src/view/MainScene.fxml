@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="693.0" prefWidth="1330.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SachManageController">
+  <tabs>
+      <Tab text="Trang chủ">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab text="Quản lý sách">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Pane prefHeight="159.0" prefWidth="1291.0">
+                     <children>
+                        <TextField fx:id="searchTextFieldSach" layoutX="218.0" layoutY="54.0" prefHeight="31.0" prefWidth="252.0" promptText="Điền thông tin cần tìm" />
+                        <Text layoutX="21.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tìm kiếm sách:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <ComboBox fx:id="searchComboBoxSach" layoutX="14.0" layoutY="54.0" prefHeight="31.0" prefWidth="191.0" promptText="Chọn thuộc tính" visibleRowCount="7" />
+                        <Button fx:id="status1BtnSach" layoutX="718.0" layoutY="55.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" text="Sách có sẵn" />
+                        <Button fx:id="status2BtnSach" layoutX="870.0" layoutY="55.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" text="Sách đang mượn" />
+                        <Button fx:id="status3BtnSach" layoutX="1021.0" layoutY="55.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" text="Sách quá hạn" />
+                        <Text layoutX="718.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liệt kê các sách theo trạng thái:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="searchBtnSach" layoutX="477.0" layoutY="54.0" mnemonicParsing="false" text="Tìm" />
+                     </children></Pane>
+                  <Pane prefHeight="601.0" prefWidth="1291.0">
+                     <children>
+                        <TableView fx:id="tableSach" layoutX="14.0" layoutY="1.0" prefHeight="535.0" prefWidth="1149.0">
+                          <columns>
+                            <TableColumn fx:id="c1Sach" prefWidth="115.0" text="Mã sách" />
+                            <TableColumn fx:id="c2Sach" prefWidth="247.0" text="Tên sách" />
+                              <TableColumn fx:id="c3Sach" minWidth="0.0" prefWidth="199.0" text="Tác giả" />
+                              <TableColumn fx:id="c4Sach" prefWidth="150.0" text="Nhà XB" />
+                              <TableColumn fx:id="c5Sach" prefWidth="76.0" text="Năm XB" />
+                              <TableColumn fx:id="c6Sach" text="Đơn giá" />
+                              <TableColumn fx:id="c7Sach" prefWidth="105.0" text="Trạng thái" />
+                              <TableColumn fx:id="c8Sach" minWidth="0.0" prefWidth="173.0" text="Giới thiệu" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="addBtnSach" layoutX="1172.0" layoutY="38.0" mnemonicParsing="false" onAction="#onClickAddSachBtn" prefHeight="31.0" prefWidth="138.0" text="Thêm sách mới" />
+                        <Button fx:id="saveBtnSach" layoutX="1172.0" layoutY="81.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="137.0" text="Lưu các thay đổi" />
+                        <Text layoutX="1168.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click chuột vào ô cần sửa để thay đổi thông tin" wrappingWidth="145.0">
+                           <font>
+                              <Font name="System Italic" size="13.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="delBtnSach" layoutX="1173.0" layoutY="123.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="137.0" text="Xóa sách đã chọn" />
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </content></Tab>
+      <Tab text="Mượn trả sách">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Pane prefHeight="133.0" prefWidth="1291.0">
+                     <children>
+                        <TextField layoutX="14.0" layoutY="56.0" prefHeight="31.0" prefWidth="162.0" />
+                        <Text layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Điền thông tin để tìm kiếm">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="624.0" prefWidth="1291.0">
+                     <children>
+                        <TableView fx:id="tableMT" layoutX="14.0" layoutY="-1.0" prefHeight="579.0" prefWidth="1093.0">
+                          <columns>
+                            <TableColumn fx:id="c1MT" prefWidth="161.0" text="Mã mượn trả" />
+                            <TableColumn fx:id="c2MT" prefWidth="214.0" text="Mã độc giả" />
+                              <TableColumn fx:id="c3MT" prefWidth="211.0" text="Mã thủ thư" />
+                              <TableColumn fx:id="c4MT" prefWidth="203.0" text="Ngày mượn" />
+                              <TableColumn fx:id="c5MT" prefWidth="187.0" text="Ngày hẹn trả" />
+                              <TableColumn fx:id="c6MT" prefWidth="116.0" text="Tiền cọc" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="addBtnMT" layoutX="1125.0" layoutY="37.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="152.0" text="Đăng kí mượn sách" />
+                        <Button layoutX="1126.0" layoutY="78.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="150.0" text="Xóa mục đã chọn" />
+                        <Button layoutX="1126.0" layoutY="117.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="150.0" text="Lưu thay đổi" />
+                     </children>
+                  </Pane>
+               </children></VBox>
+         </content>
+      </Tab>
+    <Tab text="Quản lý độc giả" />
+    <Tab text="Quản lý thủ thư" />
+  </tabs>
+</TabPane>

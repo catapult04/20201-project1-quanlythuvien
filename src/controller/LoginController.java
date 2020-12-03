@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,8 +17,7 @@ public class LoginController implements Initializable {
 	   
 	   
 	   @Override
-	   public void initialize(URL location, ResourceBundle resources) {
-	       // TODO (don't really need to do anything here).	      
+	   public void initialize(URL location, ResourceBundle resources) {	      
 	   }
 	 
 	   public void showDateTime(ActionEvent event) {	      
@@ -30,7 +29,7 @@ public class LoginController implements Initializable {
 	   
 	   public void onLogin(ActionEvent event) {
 		   try {
-			    Scene mainScene = new Scene(FXMLLoader.load(getClass() .getResource("/application/MainScene.fxml")));
+			    Scene mainScene = new Scene(FXMLLoader.load(getClass().getResource("/view/MainScene.fxml")));
 		        Stage stage = (Stage) btnLogin.getScene().getWindow();
 		        stage.setScene(mainScene);
 		        stage.centerOnScreen();		        
