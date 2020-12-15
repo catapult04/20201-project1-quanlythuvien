@@ -6,7 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import services.MyConnectionService;
+import services.ConnService;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -41,7 +41,7 @@ public class MainQLTV extends Application {
 	
 	public static void main(String[] args) {
 		try {
-			MyConnectionService myConnService = new MyConnectionService();
+			ConnService myConnService = new ConnService();
 			conn = myConnService.conn;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

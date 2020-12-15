@@ -27,7 +27,7 @@
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Pane prefHeight="392.0" prefWidth="1330.0">
+                  <Pane prefHeight="355.0" prefWidth="1330.0">
                      <children>
                         <TextField fx:id="search1Sach" layoutX="31.0" layoutY="62.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập mã sách" />
                         <Text layoutX="31.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tìm kiếm sách:">
@@ -48,11 +48,11 @@
                         <TextField fx:id="search5Sach" layoutX="115.0" layoutY="166.0" prefHeight="25.0" prefWidth="52.0" />
                         <Label layoutX="194.0" layoutY="174.0" text="Đến: " />
                         <TextField fx:id="search6Sach" layoutX="230.0" layoutY="166.0" prefHeight="25.0" prefWidth="52.0" />
-                        <Button fx:id="resetBtnSach1" layoutX="115.0" layoutY="207.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Reset" />
-                        <RadioButton layoutX="393.0" layoutY="62.0" mnemonicParsing="false" text="Tất cả" />
-                        <RadioButton layoutX="393.0" layoutY="82.0" mnemonicParsing="false" text="Có sẵn" />
-                        <RadioButton layoutX="393.0" layoutY="102.0" mnemonicParsing="false" text="Đang mượn" />
-                        <RadioButton layoutX="393.0" layoutY="122.0" mnemonicParsing="false" text="Quá hạn" />
+                        <Button fx:id="resetBtnSach" layoutX="115.0" layoutY="207.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Reset" />
+                        <RadioButton fx:id="radio1Sach" layoutX="393.0" layoutY="62.0" mnemonicParsing="false" text="Tất cả" />
+                        <RadioButton fx:id="radio2Sach" layoutX="393.0" layoutY="82.0" mnemonicParsing="false" text="Có sẵn" />
+                        <RadioButton fx:id="radio3Sach" layoutX="393.0" layoutY="102.0" mnemonicParsing="false" text="Đang mượn" />
+                        <RadioButton fx:id="radio4Sach" layoutX="393.0" layoutY="122.0" mnemonicParsing="false" text="Quá hạn" />
                         <Button fx:id="addBtnSach" layoutX="665.0" layoutY="59.0" mnemonicParsing="false" onAction="#onClickAddSachBtn" prefHeight="31.0" prefWidth="150.0" text="Thêm sách mới" />
                         <Button fx:id="saveBtnSach" layoutX="665.0" layoutY="128.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="151.0" text="Lưu các chỉnh sửa" />
                         <Button fx:id="delBtnSach" layoutX="665.0" layoutY="94.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="150.0" text="Xóa sách đã chọn" />
@@ -61,7 +61,7 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <Label layoutX="1058.0" layoutY="232.0" prefHeight="59.0" prefWidth="252.0" text="+ Chọn sách cần xóa rồi nhấn &quot;Xóa sách đã chọn&quot;.  + Click chuột vào ô cần thay đổi, thay đổi rồi nhấn &quot;Lưu các chỉnh sửa&quot;" wrapText="true">
+                        <Label layoutX="1058.0" layoutY="207.0" prefHeight="59.0" prefWidth="252.0" text="+ Chọn sách cần xóa rồi nhấn &quot;Xóa sách đã chọn&quot;.  + Click chuột vào ô cần thay đổi, thay đổi rồi nhấn &quot;Lưu các chỉnh sửa&quot;" wrapText="true">
                            <font>
                               <Font name="System Italic" size="11.0" />
                            </font>
@@ -70,7 +70,7 @@
                      </children></Pane>
                   <Pane prefHeight="546.0" prefWidth="1330.0">
                      <children>
-                        <TableView fx:id="tableSach" layoutX="21.0" layoutY="9.0" prefHeight="418.0" prefWidth="1290.0">
+                        <TableView fx:id="tableSach" layoutX="21.0" layoutY="9.0" prefHeight="441.0" prefWidth="1288.0">
                           <columns>
                             <TableColumn fx:id="c1Sach" prefWidth="115.0" text="Mã sách" />
                             <TableColumn fx:id="c2Sach" prefWidth="262.3999938964844" text="Tên sách" />
@@ -79,7 +79,7 @@
                               <TableColumn fx:id="c5Sach" prefWidth="76.0" text="Năm XB" />
                               <TableColumn fx:id="c6Sach" text="Đơn giá" />
                               <TableColumn fx:id="c7Sach" prefWidth="105.0" text="Trạng thái" />
-                              <TableColumn fx:id="c8Sach" minWidth="0.0" prefWidth="314.0" text="Giới thiệu" />
+                              <TableColumn fx:id="c8Sach" minWidth="0.0" prefWidth="326.20001220703125" text="Giới thiệu" />
                           </columns>
                         </TableView>
                      </children>

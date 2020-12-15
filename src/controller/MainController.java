@@ -11,9 +11,10 @@ import model.Model;
 import model.MuontraModel;
 import model.SachModel;
 import model.ThuthuModel;
-import services.MyConnectionService;
+import services.ConnService;
 import view.MainQLTV;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,9 +25,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -34,61 +38,41 @@ import javafx.util.Callback;
 
 public class MainController implements Initializable {
 	/***************
-	 * Start FOR ALL
+	 * For All
 	 ***************/
-	@Override
+	@Override //DOAN MA KHOI TAO MOI THU
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		buildData("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME);
-//		buildData("muontra_minhhn", tableMT, columnsMT, SachModel.LIST_FIELDS_NAME, SachModel.NUMBER_FIELDS);
-		buildData("docgia_minhhn", tableDG, DocgiaModel.LIST_FIELDS_NAME);
+		buildData("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
+		ToggleGroup trangthaisach = new ToggleGroup();
+		radio1Sach.setToggleGroup(trangthaisach);
+		radio2Sach.setToggleGroup(trangthaisach);
+		radio3Sach.setToggleGroup(trangthaisach);
+		radio4Sach.setToggleGroup(trangthaisach);
+		radio1Sach.setSelected(true);
+		trangthaisach.selectedToggleProperty().addListener(new ChangeListener<Toggle>() { 
+			@Override
+            public void changed(ObservableValue<? extends Toggle> ob, Toggle o1, Toggle o2) 
+            { 
+                RadioButton rb = (RadioButton)trangthaisach.getSelectedToggle(); 
+                if (rb != null) { 
+                    String s = rb.getText(); 
+                    // what do you want to do: 
+                    if(! s.equals("Tất cả")) {
+                    	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn where Trangthaisach_20183955='"+s+"'");
+                    } else {
+                    	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
+                    }
+                } 
+            }
+        }); 
+		
+//		ConnService.buildTable("muontra_minhhn", tableMT, columnsMT, SachModel.LIST_FIELDS_NAME, SachModel.NUMBER_FIELDS);
+		
+		ConnService.buildTable("docgia_minhhn", tableDG, DocgiaModel.LIST_FIELDS_NAME, "select * from docgia_minhhn");
 	}
 	
 	//this method is used for buildData method below
-	public Model createModel(String tableName, ObservableList<String> input) {
-		Model tmp;
-		switch(tableName) {
-			case "sach_minhhn": tmp = new SachModel(input); break;
-			case "docgia_minhhn": tmp = new DocgiaModel(input); break;
-			default: tmp = new ThuthuModel(input); break;
-		}
-		return tmp;
-	}
 	
-	public void buildData(String tableName, TableView table, ObservableList<String> LIST_FIELDS_NAME){
-        try{        	
-          String SQL = "SELECT * from " + tableName;
-          ResultSet rs = MainQLTV.conn.createStatement().executeQuery(SQL);
-
-          //1. Data added to ObservableList
-          ObservableList<Model> data = FXCollections.observableArrayList();
-          ObservableList<String> row;
-          while(rs.next()){
-        	  //Iterate Row
-        	  row = FXCollections.observableArrayList();;
-              for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
-                  //Iterate Column
-                  row.add(rs.getString(i));
-              }
-              data.add(createModel(tableName, row));
-          }
-          
-          //2. set property for columns
-          ObservableList<TableColumn> columns = table.getColumns();
-          for(int i=0; i<columns.size(); i++) {
-          	columns.get(i).setCellValueFactory(new PropertyValueFactory<>(LIST_FIELDS_NAME.get(i)));
-          }
-
-          //3. fullfill data
-          table.setItems(data);
-          table.setEditable(true);  //cannot edit?
-        }catch(Exception e){
-            e.printStackTrace();
-            System.out.println("Error on Building Data");             
-        }
-    }
-	/****************
-     * Finish FOR ALL
-     ****************/
 	
 	
 	
@@ -105,16 +89,26 @@ public class MainController implements Initializable {
     @FXML private TableColumn c7Sach;
     @FXML private TableColumn c8Sach;
     
-    @FXML private ComboBox searchComboBoxSach;
-    @FXML private TextField searchTextFieldSach;
+    @FXML private TextField search1Sach;
+    @FXML private TextField search2Sach;
+    @FXML private TextField search3Sach;
+    @FXML private TextField search4Sach;
+    @FXML private TextField search5Sach;
+    @FXML private TextField search6Sach;
     @FXML private Button searchBtnSach;
-    @FXML private Button status1BtnSach; //co san
-    @FXML private Button status2BtnSach; //dang muon
-    @FXML private Button status3BtnSach; //qua han
+    @FXML private Button resetBtnSach;
+    
+    @FXML private RadioButton radio1Sach;
+    @FXML private RadioButton radio2Sach;
+    @FXML private RadioButton radio3Sach;
+    @FXML private RadioButton radio4Sach;
+    
+    
     @FXML private Button addBtnSach;
     @FXML private Button saveBtnSach;
     @FXML private Button delBtnSach;
-
+    @FXML private Button add2BtnSach;
+    
     public void onClickAddSachBtn(ActionEvent event) {
     	try {
 		    Scene addSachForm = new Scene(FXMLLoader.load(getClass().getResource("/view/AddSachForm.fxml")));
@@ -127,9 +121,7 @@ public class MainController implements Initializable {
 	    }
     }
     
-    
-    
-    
+
     /************************
      * Muontra Manager
      ************************/

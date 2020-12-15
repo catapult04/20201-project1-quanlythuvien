@@ -1,10 +1,8 @@
 package controller;
 
-import java.awt.Desktop.Action;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 import com.jfoenix.controls.*;
 import javafx.scene.Scene;
