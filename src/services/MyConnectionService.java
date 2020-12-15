@@ -3,14 +3,12 @@ package services;
 import java.sql.*;
 
 public class MyConnectionService {
-	private String dbURL = "jdbc:mysql://localhost:3306/qlthuviendb";
-	private String username = "root";
-	private String password = "";
-	private String tablename;
+	private static String dbURL = "jdbc:mysql://localhost:3306/qlthuviendb";
+	private static String username = "root";
+	private static String password = "";
 	public Connection conn;
 	
-	public MyConnectionService(String tableName) throws ClassNotFoundException {
-		this.tablename = tableName;
+	public MyConnectionService() throws ClassNotFoundException {
 		Class.forName("com.mysql.jdbc.Driver");
 		this.conn = null;	
 		try {			

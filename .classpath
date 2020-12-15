@@ -53,5 +53,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/javax.json/javax.json-1.0.jar"/>
 	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/JDBC-driver-for-mysql/mysql-connector-java-5.1.40-bin.jar"/>
+	<classpathentry kind="lib" path="D:/20201/Project1/20201-quan-ly-thu-vien/mylib/jfoenix-9.0.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

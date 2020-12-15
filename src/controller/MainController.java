@@ -12,6 +12,7 @@ import model.MuontraModel;
 import model.SachModel;
 import model.ThuthuModel;
 import services.MyConnectionService;
+import view.MainQLTV;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -42,7 +43,7 @@ public class MainController implements Initializable {
 		buildData("docgia_minhhn", tableDG, DocgiaModel.LIST_FIELDS_NAME);
 	}
 	
-	//this method is used for buildData method
+	//this method is used for buildData method below
 	public Model createModel(String tableName, ObservableList<String> input) {
 		Model tmp;
 		switch(tableName) {
@@ -55,11 +56,8 @@ public class MainController implements Initializable {
 	
 	public void buildData(String tableName, TableView table, ObservableList<String> LIST_FIELDS_NAME){
         try{        	
-          MyConnectionService connService = new MyConnectionService(tableName);
-          //SQL FOR SELECTING ALL OF BOOK
           String SQL = "SELECT * from " + tableName;
-          //ResultSet
-          ResultSet rs = connService.conn.createStatement().executeQuery(SQL);
+          ResultSet rs = MainQLTV.conn.createStatement().executeQuery(SQL);
 
           //1. Data added to ObservableList
           ObservableList<Model> data = FXCollections.observableArrayList();
@@ -122,7 +120,8 @@ public class MainController implements Initializable {
 		    Scene addSachForm = new Scene(FXMLLoader.load(getClass().getResource("/view/AddSachForm.fxml")));
 	        Stage stage = new Stage();
 	        stage.setScene(addSachForm);
-	        stage.centerOnScreen();		stage.show();        
+	        stage.centerOnScreen();	
+	        stage.show();        
 	    }catch (IOException io){
 	        io.printStackTrace();
 	    }
@@ -164,6 +163,20 @@ public class MainController implements Initializable {
     @FXML private TableColumn c6DG;
     @FXML private TableColumn c7DG;
     @FXML private TableColumn c8DG;
+    
+    
+    /************************
+     * Thuthu Manager
+     ************************/
+    @FXML private TableView tableTT;
+    @FXML private TableColumn c1TT;
+    @FXML private TableColumn c2TT;
+    @FXML private TableColumn c3TT;
+    @FXML private TableColumn c4TT;
+    @FXML private TableColumn c5TT;
+    @FXML private TableColumn c6TT;
+    @FXML private TableColumn c7TT;
+    
    
     
    
