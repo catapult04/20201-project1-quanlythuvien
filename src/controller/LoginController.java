@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import services.ConnService;
 import view.MainQLTV;
 
 public class LoginController implements Initializable {
@@ -41,7 +42,7 @@ public class LoginController implements Initializable {
 		   errorLabel2.setText(null);
 		   try {
 			    String SQL = "SELECT maTT,password FROM user_minhhn WHERE username=" + "'" + userTextField.getText() + "'";
-			    ResultSet rs = MainQLTV.conn.createStatement().executeQuery(SQL);
+			    ResultSet rs = ConnService.conn.createStatement().executeQuery(SQL);
 			    try {
 			    	rs.next();
 			    	if(rs.getString(2).equals(passTextField.getText())) {

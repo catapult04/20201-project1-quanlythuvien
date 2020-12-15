@@ -2,10 +2,12 @@ package services;
 
 import java.sql.*;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.DocgiaModel;
 import model.Model;
@@ -17,13 +19,13 @@ public class ConnService {
 	private static String dbURL = "jdbc:mysql://localhost:3306/qlthuviendb";
 	private static String username = "root";
 	private static String password = "";
-	public Connection conn;
+	public static Connection conn;
 	
 	public ConnService() throws ClassNotFoundException {
 		Class.forName("com.mysql.jdbc.Driver");
-		this.conn = null;	
+		conn = null;	
 		try {			
-			this.conn = DriverManager.getConnection(dbURL, username, password);
+			conn = DriverManager.getConnection(dbURL, username, password);
 			if(conn != null)
 				System.out.println("Kết nối thành công!\n");			
 			else
@@ -47,7 +49,7 @@ public class ConnService {
 	//build Table by SQL
 	public static void buildTable(String tableName, TableView table, ObservableList<String> LIST_FIELDS_NAME, String SQL){
         try{        	
-          ResultSet rs = MainQLTV.conn.createStatement().executeQuery(SQL);
+          ResultSet rs = conn.createStatement().executeQuery(SQL);
 
           //1. Data added to ObservableList
           ObservableList<Model> data = FXCollections.observableArrayList();
@@ -76,4 +78,26 @@ public class ConnService {
             System.out.println("Error on Building Data");             
         }
     }
+	
+	//Cau lenh insert
+	public static void insertInto(String tableName, ObservableList<String> info) {
+		String SQL = "insert into " + tableName + " values (";
+		int i;
+		for(i=0; i<info.size()-1; i++) {
+			SQL = SQL.concat("'" + info.get(i) + "',");
+		}
+		SQL = SQL.concat("'" + info.get(i) + "');");
+//		System.out.println(SQL);
+		try {
+			conn.createStatement().execute(SQL);
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setContentText("Thêm thành công!");
+			alert.showAndWait();
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Có lỗi xảy ra!");
+			alert.showAndWait();
+//			e.printStackTrace();
+		}
+	}
 }

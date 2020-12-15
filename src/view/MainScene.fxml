@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
@@ -40,7 +39,7 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <Button fx:id="searchBtnSach" layoutX="31.0" layoutY="207.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Tìm" />
+                        <Button fx:id="searchBtnSach" layoutX="31.0" layoutY="207.0" mnemonicParsing="false" onAction="#onSearchBtnSach" prefHeight="25.0" prefWidth="64.0" text="Tìm" />
                         <TextField fx:id="search2Sach" layoutX="31.0" layoutY="88.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập tên sách" />
                         <TextField fx:id="search3Sach" layoutX="31.0" layoutY="114.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập tên tác giả" />
                         <TextField fx:id="search4Sach" layoutX="31.0" layoutY="140.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập tên NXB" />
@@ -48,14 +47,14 @@
                         <TextField fx:id="search5Sach" layoutX="115.0" layoutY="166.0" prefHeight="25.0" prefWidth="52.0" />
                         <Label layoutX="194.0" layoutY="174.0" text="Đến: " />
                         <TextField fx:id="search6Sach" layoutX="230.0" layoutY="166.0" prefHeight="25.0" prefWidth="52.0" />
-                        <Button fx:id="resetBtnSach" layoutX="115.0" layoutY="207.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Reset" />
+                        <Button fx:id="resetBtnSach" layoutX="115.0" layoutY="207.0" mnemonicParsing="false" onAction="#onResetBtnSach" prefHeight="25.0" prefWidth="64.0" text="Reset" />
                         <RadioButton fx:id="radio1Sach" layoutX="393.0" layoutY="62.0" mnemonicParsing="false" text="Tất cả" />
                         <RadioButton fx:id="radio2Sach" layoutX="393.0" layoutY="82.0" mnemonicParsing="false" text="Có sẵn" />
                         <RadioButton fx:id="radio3Sach" layoutX="393.0" layoutY="102.0" mnemonicParsing="false" text="Đang mượn" />
                         <RadioButton fx:id="radio4Sach" layoutX="393.0" layoutY="122.0" mnemonicParsing="false" text="Quá hạn" />
-                        <Button fx:id="addBtnSach" layoutX="665.0" layoutY="59.0" mnemonicParsing="false" onAction="#onClickAddSachBtn" prefHeight="31.0" prefWidth="150.0" text="Thêm sách mới" />
-                        <Button fx:id="saveBtnSach" layoutX="665.0" layoutY="128.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="151.0" text="Lưu các chỉnh sửa" />
-                        <Button fx:id="delBtnSach" layoutX="665.0" layoutY="94.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="150.0" text="Xóa sách đã chọn" />
+                        <Button fx:id="addBtnSach" layoutX="665.0" layoutY="59.0" mnemonicParsing="false" onAction="#onAddBtnSach" prefHeight="31.0" prefWidth="150.0" text="Thêm sách mới" />
+                        <Button fx:id="saveBtnSach" layoutX="665.0" layoutY="128.0" mnemonicParsing="false" onAction="#onSaveBtnSach" prefHeight="31.0" prefWidth="151.0" text="Lưu các chỉnh sửa" />
+                        <Button fx:id="delBtnSach" layoutX="665.0" layoutY="94.0" mnemonicParsing="false" onAction="#onDelBtnSach" prefHeight="31.0" prefWidth="150.0" text="Xóa sách đã chọn" />
                         <Text layoutX="665.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thao tác:">
                            <font>
                               <Font size="17.0" />
@@ -66,7 +65,7 @@
                               <Font name="System Italic" size="11.0" />
                            </font>
                         </Label>
-                        <Button fx:id="add2BtnSach" layoutX="664.0" layoutY="176.0" mnemonicParsing="false" onAction="#onClickAddSachBtn" prefHeight="31.0" prefWidth="152.0" text="Thêm nhiều sách từ file..." />
+                        <Button fx:id="add2BtnSach" layoutX="664.0" layoutY="176.0" mnemonicParsing="false" onAction="#onAdd2BtnSach" prefHeight="31.0" prefWidth="152.0" text="Thêm nhiều sách từ file..." />
                      </children></Pane>
                   <Pane prefHeight="546.0" prefWidth="1330.0">
                      <children>
@@ -124,23 +123,17 @@
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Pane prefHeight="131.0" prefWidth="1330.0">
-                     <children>
-                        <Text layoutX="54.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                        <ComboBox layoutX="37.0" layoutY="48.0" prefWidth="150.0" />
-                        <TextField layoutX="218.0" layoutY="64.0" />
-                        <Button layoutX="423.0" layoutY="64.0" mnemonicParsing="false" text="Button" />
-                     </children></Pane>
+                  <Pane prefHeight="205.0" prefWidth="1330.0" />
                   <Pane prefHeight="532.0" prefWidth="1330.0">
                      <children>
                         <TableView fx:id="tableDG" layoutX="14.0" layoutY="4.0" prefHeight="514.0" prefWidth="1105.0">
                           <columns>
                             <TableColumn fx:id="c1DG" prefWidth="88.0" text="Mã độc giả" />
-                            <TableColumn fx:id="c2DG" prefWidth="194.0" text="Tên độc giả" />
-                              <TableColumn fx:id="c3DG" minWidth="0.0" prefWidth="75.0" text="Giới tính" />
+                            <TableColumn fx:id="c2DG" prefWidth="199.1999969482422" text="Tên độc giả" />
+                              <TableColumn fx:id="c3DG" minWidth="0.0" prefWidth="70.4000244140625" text="Giới tính" />
                               <TableColumn fx:id="c4DG" prefWidth="233.0" text="Địa chỉ" />
-                              <TableColumn fx:id="c5DG" minWidth="0.0" prefWidth="79.0" text="Năm sinh" />
-                              <TableColumn fx:id="c6DG" prefWidth="136.0" text="CMND" />
+                              <TableColumn fx:id="c5DG" minWidth="0.0" prefWidth="81.5999755859375" text="Năm sinh" />
+                              <TableColumn fx:id="c6DG" prefWidth="133.60009765625" text="CMND" />
                               <TableColumn fx:id="c7DG" prefWidth="158.0" text="Email" />
                               <TableColumn fx:id="c8DG" prefWidth="142.0" text="Điện thoại" />
                           </columns>
@@ -148,11 +141,6 @@
                         <Button layoutX="1189.0" layoutY="32.0" mnemonicParsing="false" text="Thêm độc giả" />
                         <Button layoutX="1151.0" layoutY="114.0" mnemonicParsing="false" text="Xóa độc giả đã chọn" />
                         <Button layoutX="1179.0" layoutY="72.0" mnemonicParsing="false" text="Lưu các thay đổi" />
-                        <Text layoutX="1162.0" layoutY="492.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click chuột vào ô cần sửa để thay đổi thông tin" wrappingWidth="145.0">
-                           <font>
-                              <Font name="System Italic" size="13.0" />
-                           </font>
-                        </Text>
                      </children>
                   </Pane>
                </children>

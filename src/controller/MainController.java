@@ -42,36 +42,13 @@ public class MainController implements Initializable {
 	 ***************/
 	@Override //DOAN MA KHOI TAO MOI THU
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		buildData("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
-		ToggleGroup trangthaisach = new ToggleGroup();
-		radio1Sach.setToggleGroup(trangthaisach);
-		radio2Sach.setToggleGroup(trangthaisach);
-		radio3Sach.setToggleGroup(trangthaisach);
-		radio4Sach.setToggleGroup(trangthaisach);
-		radio1Sach.setSelected(true);
-		trangthaisach.selectedToggleProperty().addListener(new ChangeListener<Toggle>() { 
-			@Override
-            public void changed(ObservableValue<? extends Toggle> ob, Toggle o1, Toggle o2) 
-            { 
-                RadioButton rb = (RadioButton)trangthaisach.getSelectedToggle(); 
-                if (rb != null) { 
-                    String s = rb.getText(); 
-                    // what do you want to do: 
-                    if(! s.equals("Tất cả")) {
-                    	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn where Trangthaisach_20183955='"+s+"'");
-                    } else {
-                    	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
-                    }
-                } 
-            }
-        }); 
+		ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
+		buildRadioBtnsSach();
 		
 //		ConnService.buildTable("muontra_minhhn", tableMT, columnsMT, SachModel.LIST_FIELDS_NAME, SachModel.NUMBER_FIELDS);
 		
 		ConnService.buildTable("docgia_minhhn", tableDG, DocgiaModel.LIST_FIELDS_NAME, "select * from docgia_minhhn");
 	}
-	
-	//this method is used for buildData method below
 	
 	
 	
@@ -109,7 +86,40 @@ public class MainController implements Initializable {
     @FXML private Button delBtnSach;
     @FXML private Button add2BtnSach;
     
-    public void onClickAddSachBtn(ActionEvent event) {
+    public void onSearchBtnSach(ActionEvent event) {
+    	
+    }
+    
+    public void onResetBtnSach(ActionEvent event) {
+    	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
+    }
+    
+    public void buildRadioBtnsSach() {
+    	ToggleGroup trangthaisach = new ToggleGroup();
+		radio1Sach.setToggleGroup(trangthaisach);
+		radio2Sach.setToggleGroup(trangthaisach);
+		radio3Sach.setToggleGroup(trangthaisach);
+		radio4Sach.setToggleGroup(trangthaisach);
+		radio1Sach.setSelected(true);
+		trangthaisach.selectedToggleProperty().addListener(new ChangeListener<Toggle>() { 
+			@Override
+            public void changed(ObservableValue<? extends Toggle> ob, Toggle o1, Toggle o2) 
+            { 
+                RadioButton rb = (RadioButton)trangthaisach.getSelectedToggle(); 
+                if (rb != null) { 
+                    String s = rb.getText(); 
+                    // what do you want to do: 
+                    if(! s.equals("Tất cả")) {
+                    	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn where Trangthaisach_20183955='"+s+"'");
+                    } else {
+                    	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
+                    }
+                } 
+            }
+        });
+    }
+    
+    public void onAddBtnSach(ActionEvent event) {
     	try {
 		    Scene addSachForm = new Scene(FXMLLoader.load(getClass().getResource("/view/AddSachForm.fxml")));
 	        Stage stage = new Stage();
@@ -119,6 +129,18 @@ public class MainController implements Initializable {
 	    }catch (IOException io){
 	        io.printStackTrace();
 	    }
+    }
+    
+    public void onDelBtnSach(ActionEvent event) {
+    	
+    }
+    
+    public void onSaveBtnSach(ActionEvent event) {
+    	
+    }
+    
+    public void onAdd2BtnSach(ActionEvent event) {
+    	
     }
     
 

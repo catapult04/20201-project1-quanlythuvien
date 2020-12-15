@@ -24,7 +24,6 @@ import javafx.scene.layout.BorderPane;
  */
 
 public class MainQLTV extends Application {
-	public static Connection conn;
 	public static String maTT;
 	@Override
 	public void start(Stage primaryStage) {
@@ -34,18 +33,13 @@ public class MainQLTV extends Application {
 			primaryStage.setScene(loginScene);
 	        primaryStage.setTitle("QUẢN LÝ THƯ VIỆN");
 			primaryStage.show();
+			ConnService connService = new ConnService();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void main(String[] args) {
-		try {
-			ConnService myConnService = new ConnService();
-			conn = myConnService.conn;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 		launch(args);
 	}
 }
