@@ -31,6 +31,20 @@ public class SachModel extends Model{
 		}
 	}
 	
+	public String getField(int pos) {
+		switch(pos) {
+		case 0: return getMasach_20183955(); 
+		case 1: return getTensach_20183955(); 
+		case 2: return getTacgia_20183955(); 
+		case 3: return getNhaXB_20183955(); 
+		case 4: return getNamXB_20183955(); 
+		case 5: return getDongia_20183955(); 
+		case 6: return getTrangthaisach_20183955(); 
+		case 7: return getGioithieu_20183955(); 
+		default: return"";
+		}
+	}
+	
 	public SachModel(ObservableList<String> input) {
 		super();
 		setMasach_20183955(input.get(0));

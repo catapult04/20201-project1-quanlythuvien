@@ -3,7 +3,6 @@ package services;
 import java.sql.*;
 
 import com.jfoenix.controls.JFXButton;
-
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.collections.FXCollections;
@@ -119,7 +118,7 @@ public class ConnService {
 			return true;
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText("Có lỗi xảy ra!");
+			alert.setContentText("Có lỗi xảy ra khi insert!");
 			alert.showAndWait();
 			return false;
 		}
@@ -143,15 +142,40 @@ public class ConnService {
 			return true;
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText("Có lỗi xảy ra!");
+			alert.setContentText("Có lỗi xảy ra khi delete!");
 			alert.showAndWait();
 			return false;
 		}
 	}
 	
 	//cau lenh update
-	public static boolean update(String tableName) {
+	public static boolean update(String tableName, ObservableList<String> input) {
+		ObservableList<String> LFN = FXCollections.observableArrayList();
+		switch(tableName) {
+		case "sach_minhhn" : LFN=SachModel.LIST_FIELDS_NAME; break;
+		case "docgia_minhhn": LFN=DocgiaModel.LIST_FIELDS_NAME; break;
+		default: LFN=SachModel.LIST_FIELDS_NAME; break;
+		}
 		
+		String SQL = "update " + tableName + " set ";
+		int i;
+		for(i=0; i<input.size()-1; i++) {
+			SQL = SQL.concat(LFN.get(i) + "='" + input.get(i) + "',");
+		}
+		SQL = SQL.concat(LFN.get(i) + "='" + input.get(i) + "'" + " where " + LFN.get(0) + "='" +  input.get(0) + "'");
+		
+		try {
+			conn.createStatement().execute(SQL);
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setContentText("Update thành công!");
+			alert.showAndWait();
+			return true;
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Có lỗi xảy ra khi update!");
+			alert.showAndWait();
+			return false;
+		}
 	}
 	
 }

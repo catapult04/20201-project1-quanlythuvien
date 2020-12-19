@@ -23,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -59,8 +60,8 @@ public class MainController implements Initializable {
 	/*******************
      * Home tab
      *******************/
-	@FXML private javafx.scene.control.Label helloLabel;
-	@FXML private javafx.scene.control.Label usernameLabel;
+	@FXML private Label helloLabel;
+	@FXML private Label usernameLabel;
 	@FXML private JFXButton signOutBtn;
 	
 	public void buildHomeTab() {
@@ -115,11 +116,30 @@ public class MainController implements Initializable {
     @FXML private Button addBtnSach;
     @FXML private Button add2BtnSach;
     
-    public void onSearchBtnSach(ActionEvent event) {
-    	
+    @FXML private Label countSach;
+    @FXML private Button countBtn;
+    
+    public void onSearchBtnSach() {
+    	String from = search5Sach.getText().length()==4 ? search5Sach.getText() : "0000";
+    	String to = search6Sach.getText().length()==4 ? search6Sach.getText() : "9999";
+    	String SQL="select * from sach_minhhn where "
+    			+ "Masach_20183955 LIKE '%" + search1Sach.getText() + "%'"
+    			+ " and Tensach_20183955 LIKE '%" + search2Sach.getText() + "%'"
+    			+ " and Tacgia_20183955 LIKE '%" + search3Sach.getText() + "%'"
+    			+ " and NhaXB_20183955 LIKE '%" + search4Sach.getText() + "%'"
+    			+ " and NamXB_20183955>='" + from + "'"
+    			+ " and NamXB_20183955<='" + to + "'";
+    	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, SQL);
     }
     
     public void onResetBtnSach() {
+    	search1Sach.clear();
+    	search2Sach.clear();
+    	search3Sach.clear();
+    	search4Sach.clear();
+    	search5Sach.clear();
+    	search6Sach.clear();
+    	radio1Sach.setSelected(true);
     	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
     }
     
@@ -136,12 +156,16 @@ public class MainController implements Initializable {
             { 
                 RadioButton rb = (RadioButton)trangthaisach.getSelectedToggle(); 
                 if (rb != null) { 
-                    String s = rb.getText(); 
-                    // what do you want to do: 
+                    String s = rb.getText();
+                    onSearchBtnSach();
                     if(! s.equals("Tất cả")) {
-                    	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn where Trangthaisach_20183955='"+s+"'");
-                    } else {
-                    	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
+                    	int sz = dataSach.size();
+                    	for(int i=0; i<sz; i++) 
+                    		if(! ((SachModel) dataSach.get(i)).getTrangthaisach_20183955().equals(s)) {
+                    			dataSach.remove(dataSach.get(i));
+                    			sz--;
+                    			i--;
+                    		}
                     }
                 } 
             }
@@ -162,6 +186,10 @@ public class MainController implements Initializable {
     
     public void onAdd2BtnSach(ActionEvent event) {
     	
+    }
+    
+    public void onCountBtn() {
+    	countSach.setText(String.valueOf(dataSach.size()));
     }
     
 
