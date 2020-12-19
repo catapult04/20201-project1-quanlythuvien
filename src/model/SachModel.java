@@ -9,25 +9,46 @@ public class SachModel extends Model{
 	private String Tacgia_20183955; //varchar 40
 	private String NhaXB_20183955; //varchar 40
 	private String NamXB_20183955; //year 4
-	private int Dongia_20183955; //int 9
+	private String Dongia_20183955; //int 9
 	private String Trangthaisach_20183955; //varchar 30
 	private String Gioithieu_20183955; //var char 150
 	
 	public static ObservableList<String> LIST_FIELDS_NAME = 
 			FXCollections.observableArrayList("Masach_20183955", "Tensach_20183955","Tacgia_20183955", "NhaXB_20183955", 
-					"NamXB_20183955", "Dongia_20183955", "Trangthaisach_20183955", "Gioithieu_20183955");
+					"NamXB_20183955", "Dongia_20183955", "Trangthaisach_20183955", "Gioithieu_20183955", "delBtn", "saveBtn");
+	
+	public void setField(int pos, String value) {
+		switch(pos) {
+		case 0: setMasach_20183955(value); break;
+		case 1: setTensach_20183955(value); break;
+		case 2: setTacgia_20183955(value); break;
+		case 3: setNhaXB_20183955(value); break;
+		case 4: setNamXB_20183955(value); break;
+		case 5: setDongia_20183955(value); break;
+		case 6: setTrangthaisach_20183955(value); break;
+		case 7: setGioithieu_20183955(value); break;
+		default: break;
+		}
+	}
 	
 	public SachModel(ObservableList<String> input) {
+		super();
 		setMasach_20183955(input.get(0));
 		setTensach_20183955(input.get(1));
 		setTacgia_20183955(input.get(2));
 		setNhaXB_20183955(input.get(3));
 		setNamXB_20183955(input.get(4));
-		setDongia_20183955(Integer.parseInt(input.get(5)));
+		setDongia_20183955(input.get(5));
 		setTrangthaisach_20183955(input.get(6));
 		setGioithieu_20183955(input.get(7));
 	}
 
+	
+	
+	
+	
+	
+	
 	public String getMasach_20183955() {
 		return Masach_20183955;
 	}
@@ -58,10 +79,10 @@ public class SachModel extends Model{
 	public void setNamXB_20183955(String namXB_20183955) {
 		NamXB_20183955 = namXB_20183955;
 	}
-	public int getDongia_20183955() {
+	public String getDongia_20183955() {
 		return Dongia_20183955;
 	}
-	public void setDongia_20183955(int dongia_20183955) {
+	public void setDongia_20183955(String dongia_20183955) {
 		Dongia_20183955 = dongia_20183955;
 	}
 	public String getTrangthaisach_20183955() {

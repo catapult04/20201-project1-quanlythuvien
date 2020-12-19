@@ -1,15 +1,11 @@
 package view;
 	
-import java.sql.Connection;
-
+import controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import services.ConnService;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 
 /*
  * 1.Build path for project: 	add all jar files in javafx/lib to Modules path
@@ -24,7 +20,9 @@ import javafx.scene.layout.BorderPane;
  */
 
 public class MainQLTV extends Application {
-	public static String maTT;
+	public static String maTT, tenTT, username;
+	public static MainController control;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {

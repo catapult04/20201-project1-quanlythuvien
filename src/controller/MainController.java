@@ -2,9 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.util.ResourceBundle;
-import com.mysql.jdbc.Statement;
+
+import com.jfoenix.controls.JFXButton;
 
 import model.DocgiaModel;
 import model.Model;
@@ -13,10 +13,8 @@ import model.SachModel;
 import model.ThuthuModel;
 import services.ConnService;
 import view.MainQLTV;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,17 +35,48 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
 
 public class MainController implements Initializable {
+	public MainController() {
+		super();
+		MainQLTV.control = this;
+	}
+	
 	/***************
 	 * For All
 	 ***************/
 	@Override //DOAN MA KHOI TAO MOI THU
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		buildHomeTab();
+		
 		ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
 		buildRadioBtnsSach();
 		
 //		ConnService.buildTable("muontra_minhhn", tableMT, columnsMT, SachModel.LIST_FIELDS_NAME, SachModel.NUMBER_FIELDS);
 		
 		ConnService.buildTable("docgia_minhhn", tableDG, DocgiaModel.LIST_FIELDS_NAME, "select * from docgia_minhhn");
+	}	
+	
+	
+	/*******************
+     * Home tab
+     *******************/
+	@FXML private javafx.scene.control.Label helloLabel;
+	@FXML private javafx.scene.control.Label usernameLabel;
+	@FXML private JFXButton signOutBtn;
+	
+	public void buildHomeTab() {
+		helloLabel.setText("Xin chào, " + MainQLTV.tenTT);
+		usernameLabel.setText(MainQLTV.username);
+	}
+	
+	public void onSignOutBtn(ActionEvent event) {
+		try {
+			Stage s = (Stage) signOutBtn.getScene().getWindow();
+			Scene loginScene = new Scene(FXMLLoader.load(getClass() .getResource("/view/LoginScene.fxml")));
+			s.setScene(loginScene);
+			s.centerOnScreen();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -56,15 +85,18 @@ public class MainController implements Initializable {
     /*******************
      * Sach Manager
      *******************/
-	@FXML private TableView tableSach;
-    @FXML private TableColumn c1Sach;
-    @FXML private TableColumn c2Sach;
-    @FXML private TableColumn c3Sach;
-    @FXML private TableColumn c4Sach;
-    @FXML private TableColumn c5Sach;
-    @FXML private TableColumn c6Sach;
-    @FXML private TableColumn c7Sach;
-    @FXML private TableColumn c8Sach;
+	@FXML private TableView<Model> tableSach;
+	public ObservableList<Model> dataSach;
+    @FXML private TableColumn<Model, String> c1Sach;
+    @FXML private TableColumn<Model, String> c2Sach;
+    @FXML private TableColumn<Model, String> c3Sach;
+    @FXML private TableColumn<Model, String> c4Sach;
+    @FXML private TableColumn<Model, String> c5Sach;
+    @FXML private TableColumn<Model, String> c6Sach;
+    @FXML private TableColumn<Model, String> c7Sach;
+    @FXML private TableColumn<Model, String> c8Sach;
+    @FXML private TableColumn<Model, JFXButton> c9Sach;
+    @FXML private TableColumn<Model, JFXButton> c10Sach;
     
     @FXML private TextField search1Sach;
     @FXML private TextField search2Sach;
@@ -80,17 +112,14 @@ public class MainController implements Initializable {
     @FXML private RadioButton radio3Sach;
     @FXML private RadioButton radio4Sach;
     
-    
     @FXML private Button addBtnSach;
-    @FXML private Button saveBtnSach;
-    @FXML private Button delBtnSach;
     @FXML private Button add2BtnSach;
     
     public void onSearchBtnSach(ActionEvent event) {
     	
     }
     
-    public void onResetBtnSach(ActionEvent event) {
+    public void onResetBtnSach() {
     	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
     }
     
@@ -131,14 +160,6 @@ public class MainController implements Initializable {
 	    }
     }
     
-    public void onDelBtnSach(ActionEvent event) {
-    	
-    }
-    
-    public void onSaveBtnSach(ActionEvent event) {
-    	
-    }
-    
     public void onAdd2BtnSach(ActionEvent event) {
     	
     }
@@ -169,6 +190,7 @@ public class MainController implements Initializable {
      * Docgia Manager
      ************************/
     @FXML private TableView tableDG;
+    public ObservableList<Model> dataDG;
     @FXML private TableColumn c1DG;
     @FXML private TableColumn c2DG;
     @FXML private TableColumn c3DG;

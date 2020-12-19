@@ -20,7 +20,6 @@ import services.ConnService;
 import view.MainQLTV;
 
 public class LoginController implements Initializable {
-	   @FXML private JFXButton btnLogin;
 	   @FXML private Button closeBtn;
 	   @FXML private JFXTextField userTextField;
 	   @FXML private JFXPasswordField passTextField;
@@ -45,8 +44,16 @@ public class LoginController implements Initializable {
 			    ResultSet rs = ConnService.conn.createStatement().executeQuery(SQL);
 			    try {
 			    	rs.next();
-			    	if(rs.getString(2).equals(passTextField.getText())) {
-			    		MainQLTV.maTT = rs.getString(1);
+			    	if(rs.getString(2).equals(passTextField.getText())) {				        
+				        //crete info of thuthu
+				        MainQLTV.maTT = rs.getString(1);
+				        MainQLTV.username = userTextField.getText();
+				        String SQL2 = "SELECT Ten_20183955 FROM thuthu_minhhn WHERE MaTT_20183955=" + "'" + MainQLTV.maTT + "'";
+					    ResultSet rs2 = ConnService.conn.createStatement().executeQuery(SQL2);
+					    rs2.next();
+					    MainQLTV.tenTT = rs2.getString(1);
+					    
+					  //create UI
 			    		Scene mainScene = new Scene(FXMLLoader.load(getClass().getResource("/view/MainScene.fxml")));
 				        Stage stage = (Stage) forgotPassLabel.getScene().getWindow();
 				        stage.setScene(mainScene);

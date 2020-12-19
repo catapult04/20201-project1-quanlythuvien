@@ -2,13 +2,18 @@ package services;
 
 import java.sql.*;
 
+import com.jfoenix.controls.JFXButton;
+
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import model.DocgiaModel;
 import model.Model;
 import model.SachModel;
@@ -35,7 +40,7 @@ public class ConnService {
 		}
 	}
 	
-	//this is used for buildTable method bellow
+	//used for buildTable method bellow
 	public static Model createModel(String tableName, ObservableList<String> input) {
 		Model tmp;
 		switch(tableName) {
@@ -46,7 +51,7 @@ public class ConnService {
 		return tmp;
 	}
 	
-	//build Table by SQL
+	//build data for Table by SQL
 	public static void buildTable(String tableName, TableView table, ObservableList<String> LIST_FIELDS_NAME, String SQL){
         try{        	
           ResultSet rs = conn.createStatement().executeQuery(SQL);
@@ -63,13 +68,31 @@ public class ConnService {
               }
               data.add(createModel(tableName, row));
           }
+          switch(tableName) {
+          case "sach_minhhn": MainQLTV.control.dataSach = data; break;
+          case "docgia_minhhn": MainQLTV.control.dataDG = data; break;
+          }
           
           //2. set property for columns
-          ObservableList<TableColumn> columns = table.getColumns();
-          for(int i=0; i<columns.size(); i++) {
+          ObservableList<TableColumn<Model, String>> columns = table.getColumns();
+          int sz = LIST_FIELDS_NAME.size();
+          for(int i = 0; i < sz-2; i++) {
           	columns.get(i).setCellValueFactory(new PropertyValueFactory<>(LIST_FIELDS_NAME.get(i)));
+          	columns.get(i).setCellFactory(TextFieldTableCell.forTableColumn());
+          	columns.get(i).setOnEditCommit(
+          		    new EventHandler<CellEditEvent<Model, String>>() {
+          		        @Override
+          		        public void handle(CellEditEvent<Model, String> t) {
+          		        	int pos = t.getTablePosition().getColumn();
+          		            ((Model) t.getTableView().getItems().get(t.getTablePosition().getRow())).setField(pos, t.getNewValue());
+          		        }
+          		    }
+          		);
           }
-
+          for(int i = sz-2; i <sz ; i++) {
+            	columns.get(i).setCellValueFactory(new PropertyValueFactory<>(LIST_FIELDS_NAME.get(i)));
+          }
+          
           //3. fullfill data
           table.setItems(data);
           table.setEditable(true);  //cannot edit?
@@ -79,25 +102,56 @@ public class ConnService {
         }
     }
 	
-	//Cau lenh insert
-	public static void insertInto(String tableName, ObservableList<String> info) {
+	
+	//Cau lenh insert into
+	public static boolean insertInto(String tableName, ObservableList<String> info) {
 		String SQL = "insert into " + tableName + " values (";
 		int i;
 		for(i=0; i<info.size()-1; i++) {
 			SQL = SQL.concat("'" + info.get(i) + "',");
 		}
 		SQL = SQL.concat("'" + info.get(i) + "');");
-//		System.out.println(SQL);
 		try {
 			conn.createStatement().execute(SQL);
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setContentText("Thêm thành công!");
 			alert.showAndWait();
+			return true;
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Có lỗi xảy ra!");
 			alert.showAndWait();
-//			e.printStackTrace();
+			return false;
 		}
 	}
+	
+	//Cau lenh delete
+	public static boolean delete(String tableName, String str) {
+		String fieldName;
+		switch(tableName) {
+		case "sach_minhhn" : fieldName="Masach_20183955"; break;
+		case "docgia_minhhn": fieldName="MaDG_20183955"; break;
+		case "thuthu_minhhn": fieldName="MaTT_20183955"; break;
+		default: fieldName="";
+		}
+		String SQL = "delete from " + tableName + " where " + fieldName + "=" + "'" + str + "'";
+		try {
+			conn.createStatement().execute(SQL);
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setContentText("Xóa thành công!");
+			alert.showAndWait();
+			return true;
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Có lỗi xảy ra!");
+			alert.showAndWait();
+			return false;
+		}
+	}
+	
+	//cau lenh update
+	public static boolean update(String tableName) {
+		
+	}
+	
 }

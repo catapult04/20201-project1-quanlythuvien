@@ -9,15 +9,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Model;
+import model.SachModel;
 import services.ConnService;
+import view.MainQLTV;
 
 public class AddSachController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 	}
+	
+	private MainController mainController;
 	
 	@FXML private TextField tf1;
 	@FXML private TextField tf2;
@@ -38,8 +44,12 @@ public class AddSachController implements Initializable{
 		for(int i=0; i<ltf.size(); i++) {
 			info.add(ltf.get(i).getText());
 		}
-//		Model newObj = ConnService.createModel("sachminhn", info);
-		ConnService.insertInto("sach_minhhn", info);
+		if(ConnService.insertInto("sach_minhhn", info)==true) {
+			MainQLTV.control.dataSach.add(new SachModel(info));
+			for(int i=0; i<ltf.size(); i++) {
+				ltf.get(i).setText(null);
+			}
+		}
 	}
 	
 	public void onCancelBtn(ActionEvent event) {
