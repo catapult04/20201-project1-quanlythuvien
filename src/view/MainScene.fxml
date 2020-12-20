@@ -44,7 +44,7 @@
                               <Font name="System Bold Italic" size="15.0" />
                            </font>
                         </Label>
-                        <JFXButton fx:id="signOutBtn" layoutX="586.0" layoutY="36.0" onAction="#onSignOutBtn" prefHeight="25.0" prefWidth="79.0" text="Đăng xuất" textFill="#c5590c">
+                        <JFXButton fx:id="signOutBtn" focusTraversable="false" layoutX="586.0" layoutY="36.0" onAction="#onSignOutBtn" prefHeight="25.0" prefWidth="79.0" text="Đăng xuất" textFill="#c5590c">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -111,7 +111,7 @@
                         <Button fx:id="add2BtnSach" layoutX="664.0" layoutY="98.0" mnemonicParsing="false" onAction="#onAdd2BtnSach" prefHeight="31.0" prefWidth="152.0" text="Thêm nhiều sách từ file..." />
                         <Label layoutX="1255.0" layoutY="211.0" text="Count = " />
                         <Label fx:id="countSach" layoutX="1302.0" layoutY="211.0" text="c" />
-                        <Button fx:id="countBtn" layoutX="1255.0" layoutY="232.0" mnemonicParsing="false" text="Đếm" onAction="#onCountBtn"/>
+                        <Button fx:id="countBtn" layoutX="1255.0" layoutY="232.0" mnemonicParsing="false" onAction="#onCountBtn" text="Đếm" />
                      </children></Pane>
                   <Pane prefHeight="546.0" prefWidth="1330.0">
                      <children>
@@ -171,49 +171,110 @@
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Pane prefHeight="205.0" prefWidth="1330.0" />
-                  <Pane prefHeight="532.0" prefWidth="1330.0">
+                  <Pane prefHeight="270.0" prefWidth="1330.0">
                      <children>
-                        <TableView fx:id="tableDG" layoutX="14.0" layoutY="4.0" prefHeight="514.0" prefWidth="1105.0">
+                        <TextField fx:id="search1DG" layoutX="53.0" layoutY="43.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập mã độc giả" />
+                        <Text layoutX="53.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tìm độc giả:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="searchBtnDG" layoutX="53.0" layoutY="230.0" mnemonicParsing="false" onAction="#onSearchBtnDG" prefHeight="25.0" prefWidth="64.0" text="Tìm" />
+                        <TextField fx:id="search2DG" layoutX="53.0" layoutY="67.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập tên độc giả" />
+                        <TextField fx:id="search3DG" layoutX="53.0" layoutY="93.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập địa chỉ" />
+                        <TextField fx:id="search4DG" layoutX="53.0" layoutY="118.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập số CMND" />
+                        <Label layoutX="53.0" layoutY="200.0" text="Năm sinh:   Từ:" />
+                        <TextField fx:id="search7DG" layoutX="137.0" layoutY="196.0" prefHeight="25.0" prefWidth="52.0" />
+                        <Label layoutX="208.0" layoutY="200.0" text="Đến: " />
+                        <TextField fx:id="search8DG" layoutX="235.0" layoutY="196.0" prefHeight="25.0" prefWidth="52.0" />
+                        <Button fx:id="resetBtnDG" layoutX="147.0" layoutY="230.0" mnemonicParsing="false" onAction="#onResetBtnDG" prefHeight="25.0" prefWidth="64.0" text="Reset" />
+                        <RadioButton fx:id="radio1DG" layoutX="402.0" layoutY="48.0" mnemonicParsing="false" text="Tất cả" />
+                        <RadioButton fx:id="radio2DG" layoutX="402.0" layoutY="68.0" mnemonicParsing="false" text="Nam" />
+                        <RadioButton fx:id="radio3DG" layoutX="402.0" layoutY="88.0" mnemonicParsing="false" text="Nữ" />
+                        <Button fx:id="addBtnDG" layoutX="586.0" layoutY="47.0" mnemonicParsing="false" onAction="#onAddBtnDG" prefHeight="31.0" prefWidth="150.0" text="Thêm độc giả mới" />
+                        <Text layoutX="585.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thao tác:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="add2BtnDG" layoutX="585.0" layoutY="89.0" mnemonicParsing="false" onAction="#onAdd2BtnDG" prefHeight="31.0" prefWidth="152.0" text="Thêm nhiều ĐG từ file..." />
+                        <TextField fx:id="search5DG" layoutX="53.0" layoutY="144.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập email" />
+                        <TextField fx:id="search6DG" layoutX="53.0" layoutY="170.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập số điện thoại" />
+                        <Text layoutX="402.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Giới tính:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <RadioButton fx:id="radio4DG" layoutX="402.0" layoutY="108.0" mnemonicParsing="false" text="No3" />
+                     </children></Pane>
+                  <Pane prefHeight="460.0" prefWidth="1330.0">
+                     <children>
+                        <TableView fx:id="tableDG" layoutX="48.0" prefHeight="449.0" prefWidth="1235.0">
                           <columns>
                             <TableColumn fx:id="c1DG" prefWidth="88.0" text="Mã độc giả" />
-                            <TableColumn fx:id="c2DG" prefWidth="199.1999969482422" text="Tên độc giả" />
-                              <TableColumn fx:id="c3DG" minWidth="0.0" prefWidth="70.4000244140625" text="Giới tính" />
-                              <TableColumn fx:id="c4DG" prefWidth="233.0" text="Địa chỉ" />
-                              <TableColumn fx:id="c5DG" minWidth="0.0" prefWidth="81.5999755859375" text="Năm sinh" />
-                              <TableColumn fx:id="c6DG" prefWidth="133.60009765625" text="CMND" />
-                              <TableColumn fx:id="c7DG" prefWidth="158.0" text="Email" />
-                              <TableColumn fx:id="c8DG" prefWidth="142.0" text="Điện thoại" />
+                            <TableColumn fx:id="c2DG" prefWidth="199.99998474121094" text="Tên độc giả" />
+                              <TableColumn fx:id="c3DG" minWidth="0.0" prefWidth="71.20001220703125" text="Giới tính" />
+                              <TableColumn fx:id="c4DG" prefWidth="219.20001220703125" text="Địa chỉ" />
+                              <TableColumn fx:id="c5DG" minWidth="0.0" prefWidth="96.0" text="Năm sinh" />
+                              <TableColumn fx:id="c6DG" prefWidth="152.0" text="CMND" />
+                              <TableColumn fx:id="c7DG" prefWidth="193.59991455078125" text="Email" />
+                              <TableColumn fx:id="c8DG" prefWidth="118.400146484375" text="Điện thoại" />
+                              <TableColumn fx:id="c9DG" prefWidth="43.2000732421875" />
+                              <TableColumn fx:id="c10DG" prefWidth="59.199951171875" />
                           </columns>
                         </TableView>
-                        <Button layoutX="1203.0" layoutY="35.0" mnemonicParsing="false" text="Thêm độc giả" />
-                        <Button layoutX="1151.0" layoutY="114.0" mnemonicParsing="false" text="Xóa độc giả đã chọn" />
-                        <Button layoutX="1179.0" layoutY="72.0" mnemonicParsing="false" text="Lưu các thay đổi" />
                      </children>
                   </Pane>
                </children>
             </VBox>
          </content></Tab>
-    <Tab text="Quản lý thủ thư">
+    <Tab text="Thông tin thủ thư">
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Pane prefHeight="209.0" prefWidth="1330.0" />
-                  <Pane prefHeight="552.0" prefWidth="1330.0">
+                  <Pane prefHeight="266.0" prefWidth="1330.0">
                      <children>
-                        <TableView fx:id="tableDG1" prefHeight="534.0" prefWidth="880.0">
+                        <TextField fx:id="search1TT" layoutX="32.0" layoutY="50.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập mã thủ thư" />
+                        <Text layoutX="34.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tìm thủ thư:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="searchBtnTT" layoutX="32.0" layoutY="212.0" mnemonicParsing="false" onAction="#onSearchBtnDG" prefHeight="25.0" prefWidth="64.0" text="Tìm" />
+                        <TextField fx:id="search2TT" layoutX="32.0" layoutY="75.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập tên thủ thư" />
+                        <TextField fx:id="search3TT" layoutX="32.0" layoutY="100.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập số CMND" />
+                        <Label layoutX="32.0" layoutY="179.0" text="Năm sinh:   Từ:" />
+                        <TextField fx:id="search6TT" layoutX="122.0" layoutY="175.0" prefHeight="25.0" prefWidth="52.0" />
+                        <Label layoutX="195.0" layoutY="179.0" text="Đến: " />
+                        <TextField fx:id="search7TT" layoutX="232.0" layoutY="175.0" prefHeight="25.0" prefWidth="52.0" />
+                        <Button fx:id="resetBtnTT" layoutX="123.0" layoutY="212.0" mnemonicParsing="false" onAction="#onResetBtnDG" prefHeight="25.0" prefWidth="64.0" text="Reset" />
+                        <RadioButton fx:id="radio1TT" layoutX="448.0" layoutY="54.0" mnemonicParsing="false" text="Tất cả" />
+                        <RadioButton fx:id="radio2TT" layoutX="448.0" layoutY="74.0" mnemonicParsing="false" text="Nam" />
+                        <RadioButton fx:id="radio3TT" layoutX="449.0" layoutY="94.0" mnemonicParsing="false" text="Nữ" />
+                        <TextField fx:id="search4TT" layoutX="32.0" layoutY="125.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập email" />
+                        <TextField fx:id="search5TT" layoutX="32.0" layoutY="147.0" prefHeight="19.0" prefWidth="252.0" promptText="Nhập số điện thoại" />
+                        <Text layoutX="448.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Giới tính:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <RadioButton fx:id="radio4TT" layoutX="448.0" layoutY="114.0" mnemonicParsing="false" text="No3" />
+                     </children></Pane>
+                  <Pane prefHeight="506.0" prefWidth="1330.0">
+                     <children>
+                        <TableView fx:id="tableTT" layoutX="32.0" layoutY="14.0" prefHeight="443.0" prefWidth="907.0">
                            <columns>
                               <TableColumn fx:id="c1TT" prefWidth="88.0" text="Mã thủ thư" />
-                              <TableColumn fx:id="c2TT" prefWidth="205.0" text="Tên thủ thư" />
-                              <TableColumn fx:id="c3TT" minWidth="0.0" prefWidth="79.0" text="Giới tính" />
+                              <TableColumn fx:id="c2TT" prefWidth="203.20005798339844" text="Tên thủ thư" />
+                              <TableColumn fx:id="c3TT" minWidth="0.0" prefWidth="81.5999755859375" text="Giới tính" />
                               <TableColumn fx:id="c4TT" minWidth="0.0" prefWidth="82.0" text="Năm sinh" />
-                              <TableColumn fx:id="c5TT" prefWidth="126.0" text="CMND" />
-                              <TableColumn fx:id="c6TT" prefWidth="160.0" text="Email" />
-                              <TableColumn fx:id="c7TT" prefWidth="139.0" text="Điện thoại" />
+                              <TableColumn fx:id="c5TT" prefWidth="140.0" text="CMND" />
+                              <TableColumn fx:id="c6TT" prefWidth="168.0" text="Email" />
+                              <TableColumn fx:id="c7TT" prefWidth="142.2000732421875" text="Điện thoại" />
                            </columns>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
                         </TableView>
                      </children>
                   </Pane>

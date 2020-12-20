@@ -54,6 +54,10 @@ public class MainController implements Initializable {
 //		ConnService.buildTable("muontra_minhhn", tableMT, columnsMT, SachModel.LIST_FIELDS_NAME, SachModel.NUMBER_FIELDS);
 		
 		ConnService.buildTable("docgia_minhhn", tableDG, DocgiaModel.LIST_FIELDS_NAME, "select * from docgia_minhhn");
+		buildRadioBtnsDG();
+		
+		ConnService.buildTable("thuthu_minhhn", tableTT, ThuthuModel.LIST_FIELDS_NAME, "select * from thuthu_minhhn");
+		buildRadioBtnsTT();
 	}	
 	
 	
@@ -84,7 +88,7 @@ public class MainController implements Initializable {
 	
 	
     /*******************
-     * Sach Manager
+     * Sach Tab
      *******************/
 	@FXML private TableView<Model> tableSach;
 	public ObservableList<Model> dataSach;
@@ -197,6 +201,8 @@ public class MainController implements Initializable {
      * Muontra Manager
      ************************/
     @FXML private TableView tableMT;
+    
+    
     @FXML private TableColumn c1MT;
     @FXML private TableColumn c2MT;
     @FXML private TableColumn c3MT;
@@ -215,10 +221,11 @@ public class MainController implements Initializable {
     
     
     /************************
-     * Docgia Manager
+     * Doc gia Tab
      ************************/
     @FXML private TableView tableDG;
     public ObservableList<Model> dataDG;
+    
     @FXML private TableColumn c1DG;
     @FXML private TableColumn c2DG;
     @FXML private TableColumn c3DG;
@@ -227,12 +234,109 @@ public class MainController implements Initializable {
     @FXML private TableColumn c6DG;
     @FXML private TableColumn c7DG;
     @FXML private TableColumn c8DG;
+    @FXML private TableColumn<Model, JFXButton> c9DG;
+    @FXML private TableColumn<Model, JFXButton> c10DG;
     
+    @FXML private TextField search1DG;
+    @FXML private TextField search2DG;
+    @FXML private TextField search3DG;
+    @FXML private TextField search4DG;
+    @FXML private TextField search5DG;
+    @FXML private TextField search6DG;
+    @FXML private TextField search7DG;
+    @FXML private TextField search8DG;
+    @FXML private Button searchBtnDG;
+    @FXML private Button resetBtnDG;
     
+    @FXML private RadioButton radio1DG;
+    @FXML private RadioButton radio2DG;
+    @FXML private RadioButton radio3DG;
+    @FXML private RadioButton radio4DG;
+    
+    @FXML private Button addBtnDG;
+    @FXML private Button add2BtnDG;
+    
+    public void onSearchBtnDG() {
+    	String from = search7DG.getText().length()==4 ? search7DG.getText() : "0000";
+    	String to = search8DG.getText().length()==4 ? search8DG.getText() : "9999";
+    	String SQL="select * from docgia_minhhn where "
+    			+ "MaDG_20183955 LIKE '%" + search1DG.getText() + "%'"
+    			+ " and TenDG_20183955 LIKE '%" + search2DG.getText() + "%'"
+    			+ " and Diachi_20183955 LIKE '%" + search3DG.getText() + "%'"
+    			+ " and CMND_20183955 LIKE '%" + search4DG.getText() + "%'"
+    			+ " and Email_20183955 LIKE '%" + search5DG.getText() + "%'"
+    			+ " and Dthoai_20183955 LIKE '%" + search6DG.getText() + "%'"
+    			+ " and Namsinh_20183955>='" + from + "'"
+    			+ " and Namsinh_20183955<='" + to + "'";
+    	ConnService.buildTable("docgia_minhhn", tableDG, DocgiaModel.LIST_FIELDS_NAME, SQL);
+    }
+    
+    public void onResetBtnDG() {
+    	search1DG.clear();
+    	search2DG.clear();
+    	search3DG.clear();
+    	search4DG.clear();
+    	search5DG.clear();
+    	search6DG.clear();
+    	search7DG.clear();
+    	search8DG.clear();
+    	radio1DG.setSelected(true);
+    	ConnService.buildTable("docgia_minhhn", tableDG, DocgiaModel.LIST_FIELDS_NAME, "select * from docgia_minhhn");
+    }
+    
+    public void buildRadioBtnsDG() {
+    	ToggleGroup gioitinh = new ToggleGroup();
+		radio1DG.setToggleGroup(gioitinh);
+		radio2DG.setToggleGroup(gioitinh);
+		radio3DG.setToggleGroup(gioitinh);
+		radio4DG.setToggleGroup(gioitinh);
+		radio1DG.setSelected(true);
+		gioitinh.selectedToggleProperty().addListener(new ChangeListener<Toggle>() { 
+			@Override
+            public void changed(ObservableValue<? extends Toggle> ob, Toggle o1, Toggle o2) 
+            { 
+                RadioButton rb = (RadioButton)gioitinh.getSelectedToggle(); 
+                if (rb != null) { 
+                    String s = rb.getText();
+                    onSearchBtnDG();
+                    if(! s.equals("Tất cả")) {
+                    	int sz = dataDG.size();
+                    	for(int i=0; i<sz; i++) 
+                    		if(! ((DocgiaModel) dataDG.get(i)).getGioitinh_20183955().equals(s)) {
+                    			dataDG.remove(dataDG.get(i));
+                    			sz--;
+                    			i--;
+                    		}
+                    }
+                } 
+            }
+        });
+    }
+    
+    public void onAddBtnDG(ActionEvent event) {
+    	try {
+		    Scene addForm = new Scene(FXMLLoader.load(getClass().getResource("/view/AddDGForm.fxml")));
+	        Stage stage = new Stage();
+	        stage.setScene(addForm);
+	        stage.centerOnScreen();	
+	        stage.show();        
+	    }catch (IOException io){
+	        io.printStackTrace();
+	    }
+    }
+    
+    public void onAdd2BtnDG(ActionEvent event) {
+    	
+    }
+    
+   
+
     /************************
-     * Thuthu Manager
+     * Thu thu Tab
      ************************/
     @FXML private TableView tableTT;
+    public ObservableList<Model> dataTT;
+    
     @FXML private TableColumn c1TT;
     @FXML private TableColumn c2TT;
     @FXML private TableColumn c3TT;
@@ -241,7 +345,73 @@ public class MainController implements Initializable {
     @FXML private TableColumn c6TT;
     @FXML private TableColumn c7TT;
     
-   
+    @FXML private TextField search1TT;
+    @FXML private TextField search2TT;
+    @FXML private TextField search3TT;
+    @FXML private TextField search4TT;
+    @FXML private TextField search5TT;
+    @FXML private TextField search6TT;
+    @FXML private TextField search7TT;
+    
+    @FXML private RadioButton radio1TT;
+    @FXML private RadioButton radio2TT;
+    @FXML private RadioButton radio3TT;
+    @FXML private RadioButton radio4TT;
+    
+    public void onSearchBtnTT() {
+    	String from = search6TT.getText().length()==4 ? search6TT.getText() : "0000";
+    	String to = search7TT.getText().length()==4 ? search7TT.getText() : "9999";
+    	String SQL="select * from thuthu_minhhn where "
+    			+ "MaTT_20183955 LIKE '%" + search1DG.getText() + "%'"
+    			+ " and Ten_20183955 LIKE '%" + search2DG.getText() + "%'"
+    			+ " and CMND_20183955 LIKE '%" + search2DG.getText() + "%'"
+    			+ " and Email_20183955 LIKE '%" + search5DG.getText() + "%'"
+    			+ " and Dthoai_20183955 LIKE '%" + search6DG.getText() + "%'"
+    			+ " and Namsinh_20183955>='" + from + "'"
+    			+ " and Namsinh_20183955<='" + to + "'";
+    	ConnService.buildTable("thuthu_minhhn", tableTT, ThuthuModel.LIST_FIELDS_NAME, SQL);
+    }
+    
+    public void onResetBtnTT() {
+    	search1TT.clear();
+    	search2TT.clear();
+    	search3TT.clear();
+    	search4TT.clear();
+    	search5TT.clear();
+    	search6TT.clear();
+    	search7TT.clear();
+    	radio1TT.setSelected(true);
+    	ConnService.buildTable("thuthu_minhhn", tableTT, ThuthuModel.LIST_FIELDS_NAME, "select * from thuthu_minhhn");
+    }
+    
+    public void buildRadioBtnsTT() {
+    	ToggleGroup gioitinh = new ToggleGroup();
+		radio1TT.setToggleGroup(gioitinh);
+		radio2TT.setToggleGroup(gioitinh);
+		radio3TT.setToggleGroup(gioitinh);
+		radio4TT.setToggleGroup(gioitinh);
+		radio1TT.setSelected(true);
+		gioitinh.selectedToggleProperty().addListener(new ChangeListener<Toggle>() { 
+			@Override
+            public void changed(ObservableValue<? extends Toggle> ob, Toggle o1, Toggle o2) 
+            { 
+                RadioButton rb = (RadioButton)gioitinh.getSelectedToggle(); 
+                if (rb != null) {
+                    String s = rb.getText();
+                    onSearchBtnTT();
+                    if(! s.equals("Tất cả")) {
+                    	int sz = dataTT.size();
+                    	for(int i=0; i<sz; i++) 
+                    		if(! ((ThuthuModel) dataTT.get(i)).getGioitinh_20183955().equals(s)) {
+                    			dataTT.remove(dataTT.get(i));
+                    			sz--;
+                    			i--;
+                    		}
+                    }
+                }
+            }
+        });
+    }
     
    
 }

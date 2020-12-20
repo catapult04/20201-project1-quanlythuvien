@@ -14,7 +14,35 @@ public class DocgiaModel extends Model{
 	private String Dthoai_20183955;
 	
 	public static ObservableList<String> LIST_FIELDS_NAME = FXCollections.observableArrayList("MaDG_20183955", "TenDG_20183955",
-			"Gioitinh_20183955", "Diachi_20183955", "Namsinh_20183955", "CMND_20183955", "Email_20183955", "Dthoai_20183955");
+			"Gioitinh_20183955", "Diachi_20183955", "Namsinh_20183955", "CMND_20183955", "Email_20183955", "Dthoai_20183955", "delBtn", "saveBtn");
+	
+	public void setField(int pos, String value) {
+		switch(pos) {
+		case 0: setMaDG_20183955(value); break;
+		case 1: setTenDG_20183955(value); break;
+		case 2: setGioitinh_20183955(value); break;
+		case 3: setDiachi_20183955(value); break;
+		case 4: setNamsinh_20183955(value); break;
+		case 5: setCMND_20183955(value); break;
+		case 6: setEmail_20183955(value); break;
+		case 7: setDthoai_20183955(value); break;
+		default: break;
+		}
+	}
+	
+	public String getField(int pos) {
+		switch(pos) {
+		case 0: return getMaDG_20183955(); 
+		case 1: return getTenDG_20183955(); 
+		case 2: return getGioitinh_20183955(); 
+		case 3: return getDiachi_20183955(); 
+		case 4: return getNamsinh_20183955(); 
+		case 5: return getCMND_20183955(); 
+		case 6: return getEmail_20183955(); 
+		case 7: return getDthoai_20183955();  
+		default: return"";
+		}
+	}
 	
 	public DocgiaModel(ObservableList<String> input) {
 		MaDG_20183955 = input.get(0);

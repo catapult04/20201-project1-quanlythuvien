@@ -70,6 +70,7 @@ public class ConnService {
           switch(tableName) {
           case "sach_minhhn": MainQLTV.control.dataSach = data; break;
           case "docgia_minhhn": MainQLTV.control.dataDG = data; break;
+          case "thuthu_minhhn": MainQLTV.control.dataTT = data; break;
           }
           
           //2. set property for columns
@@ -77,9 +78,10 @@ public class ConnService {
           int sz = LIST_FIELDS_NAME.size();
           for(int i = 0; i < sz-2; i++) {
           	columns.get(i).setCellValueFactory(new PropertyValueFactory<>(LIST_FIELDS_NAME.get(i)));
-          	columns.get(i).setCellFactory(TextFieldTableCell.forTableColumn());
-          	columns.get(i).setOnEditCommit(
-          		    new EventHandler<CellEditEvent<Model, String>>() {
+          	if(! tableName.equals("thuthu_minhhn")) {
+          		columns.get(i).setCellFactory(TextFieldTableCell.forTableColumn());
+          		columns.get(i).setOnEditCommit(
+          			new EventHandler<CellEditEvent<Model, String>>() {
           		        @Override
           		        public void handle(CellEditEvent<Model, String> t) {
           		        	int pos = t.getTablePosition().getColumn();
@@ -87,6 +89,7 @@ public class ConnService {
           		        }
           		    }
           		);
+          	}
           }
           for(int i = sz-2; i <sz ; i++) {
             	columns.get(i).setCellValueFactory(new PropertyValueFactory<>(LIST_FIELDS_NAME.get(i)));

@@ -15,6 +15,32 @@ public class ThuthuModel extends Model{
 	public static ObservableList<String> LIST_FIELDS_NAME = FXCollections.observableArrayList("MaTT_20183955", "Ten_20183955",
 			"Gioitinh_20183955", "Namsinh_20183955", "CMND_20183955", "Email_20183955", "Dthoai_20183955");
 	
+	public void setField(int pos, String value) {
+		switch(pos) {
+		case 0: setMaTT_20183955(value); break;
+		case 1: setTen_20183955(value); break;
+		case 2: setGioitinh_20183955(value); break;
+		case 4: setNamsinh_20183955(value); break;
+		case 5: setCMND_20183955(value); break;
+		case 6: setEmail_20183955(value); break;
+		case 7: setDthoai_20183955(value); break;
+		default: break;
+		}
+	}
+	
+	public String getField(int pos) {
+		switch(pos) {
+		case 0: return getMaTT_20183955(); 
+		case 1: return getTen_20183955(); 
+		case 2: return getGioitinh_20183955();  
+		case 4: return getNamsinh_20183955(); 
+		case 5: return getCMND_20183955(); 
+		case 6: return getEmail_20183955(); 
+		case 7: return getDthoai_20183955();  
+		default: return"";
+		}
+	}
+	
 	public ThuthuModel(ObservableList<String> input) {
 		MaTT_20183955 = input.get(0);
 		Ten_20183955 = input.get(1);
