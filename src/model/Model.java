@@ -16,6 +16,7 @@ public class Model {
 	public static ObservableList<String> LIST_FIELDS_NAME;
 	private JFXButton delBtn;
 	private JFXButton saveBtn;
+	public String oldId;
 	
 	public Model() {
 		delBtn = new JFXButton();
@@ -50,16 +51,23 @@ public class Model {
 			Optional<ButtonType> option = a.showAndWait();
 	        if (option.get() == ButtonType.OK) {
 	        	ObservableList<String> input = FXCollections.observableArrayList();
+	        	
 	        	if(this.getClass().equals(SachModel.class)) {
 	        		SachModel obj = ((SachModel) this);
 	        		for(int i=0; i<8; i++)
 	        			input.add(obj.getField(i));
-	        		ConnService.update("sach_minhhn", input);
+	        		if(ConnService.update("sach_minhhn", input, obj.oldId)==true)
+	        			obj.oldId = obj.getField(0);
+	        		else
+	        			obj.setField(0, obj.oldId);
 	        	} else if(this.getClass().equals(DocgiaModel.class)) {
 	        		DocgiaModel obj = ((DocgiaModel) this);
 	        		for(int i=0; i<8; i++)
 	        			input.add(obj.getField(i));
-	        		ConnService.update("docgia_minhhn", input);
+	        		if(ConnService.update("docgia_minhhn", input, obj.oldId)==true)
+	        			obj.oldId = obj.getField(0);
+	        		else
+	        			obj.setField(0, obj.oldId);
 	        	} 
 	        	// anything else?
 	        } else {}

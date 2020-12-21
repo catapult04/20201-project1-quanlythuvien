@@ -55,12 +55,9 @@ public class SachModel extends Model{
 		setDongia_20183955(input.get(5));
 		setTrangthaisach_20183955(input.get(6));
 		setGioithieu_20183955(input.get(7));
+		oldId = getMasach_20183955();
 	}
 
-	
-	
-	
-	
 	
 	
 	public String getMasach_20183955() {

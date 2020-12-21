@@ -5,9 +5,11 @@ import java.util.Date;
 import javafx.collections.ObservableList;
 
 public class MuontraModel {
-	private String MaMT_29183955; //char 9
-	private String MaDG_29183955; //char 5
-	private String MaTT_29183955; // char 3
+	private String MaMT_29183955; 
+	private String MaDG_29183955;
+	private String TenDG_29183955;  //
+	private String MaTT_29183955;
+	private String Ten_29183955;  //
 	private String Ngaymuon_29183955;
 	private String Ngayhentra_29183955;
 	private int Tiencoc_29183955;
@@ -22,6 +24,8 @@ public class MuontraModel {
 		setTiencoc_29183955(Integer.parseInt(input.get(5)));
 	}
 
+	
+	
 	
 	public String getMaMT_29183955() {
 		return MaMT_29183955;

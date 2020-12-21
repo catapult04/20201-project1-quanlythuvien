@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -15,13 +16,17 @@ import services.ConnService;
 import view.MainQLTV;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -58,6 +63,7 @@ public class MainController implements Initializable {
 		
 		ConnService.buildTable("thuthu_minhhn", tableTT, ThuthuModel.LIST_FIELDS_NAME, "select * from thuthu_minhhn");
 		buildRadioBtnsTT();
+		buildAccountInfo();
 	}	
 	
 	
@@ -67,10 +73,28 @@ public class MainController implements Initializable {
 	@FXML private Label helloLabel;
 	@FXML private Label usernameLabel;
 	@FXML private JFXButton signOutBtn;
+	@FXML private Label num1;
+	@FXML private Label num2;
+	@FXML private Label num3;
+	@FXML private Label num4;
+	@FXML private Label num5;
+	@FXML private Label num6;
+	@FXML private Label datenow;
 	
 	public void buildHomeTab() {
 		helloLabel.setText("Xin chào, " + MainQLTV.tenTT);
 		usernameLabel.setText(MainQLTV.username);
+		num1.setText(String.valueOf(ConnService.count("select count(Masach_20183955) from sach_minhhn")));
+		num2.setText(String.valueOf(ConnService.count("select count(Masach_20183955) from sach_minhhn where Trangthaisach_20183955='Có sẵn'")));
+		num3.setText(String.valueOf(ConnService.count("select count(Masach_20183955) from sach_minhhn where Trangthaisach_20183955='Đang mượn'")));
+		num4.setText(String.valueOf(ConnService.count("select count(Masach_20183955) from sach_minhhn where Trangthaisach_20183955='Quá hạn'")));
+		num5.setText(String.valueOf(ConnService.count("select count(MaDG_20183955) from docgia_minhhn")));
+		num6.setText(String.valueOf(ConnService.count("select count(MaMT_20183955) from muontra_minhhn")));
+		String datetime = java.time.LocalDate.now().toString();
+		String day = datetime.substring(8,10);
+		String mon = datetime.substring(5,7);
+		String yea = datetime.substring(0,4);
+		datenow.setText("Ngày " + day + "/" + mon + "/" + yea);
 	}
 	
 	public void onSignOutBtn(ActionEvent event) {
@@ -336,6 +360,7 @@ public class MainController implements Initializable {
      ************************/
     @FXML private TableView tableTT;
     public ObservableList<Model> dataTT;
+    public String oldIdTT, oldIdUser;
     
     @FXML private TableColumn c1TT;
     @FXML private TableColumn c2TT;
@@ -357,6 +382,18 @@ public class MainController implements Initializable {
     @FXML private RadioButton radio2TT;
     @FXML private RadioButton radio3TT;
     @FXML private RadioButton radio4TT;
+    
+    @FXML private TextField tf1;
+    @FXML private TextField tf2;
+    @FXML private TextField tf3;
+    @FXML private TextField tf4;
+    @FXML private ComboBox tf5;
+    @FXML private TextField tf6;
+    @FXML private TextField tf7;
+    @FXML private TextField tf8;
+    @FXML private TextField tf9;
+    @FXML private Button btn10;
+    @FXML private Button btn11;
     
     public void onSearchBtnTT() {
     	String from = search6TT.getText().length()==4 ? search6TT.getText() : "0000";
@@ -411,6 +448,57 @@ public class MainController implements Initializable {
                 }
             }
         });
+    }
+    
+    public void buildAccountInfo() {
+    	tf1.setText(MainQLTV.username);
+    	ObservableList<String> user = ConnService.select("user_minhhn", "username", MainQLTV.username);
+    	ObservableList<String> TT = ConnService.select("thuthu_minhhn", "maTT_20183955", MainQLTV.maTT);
+    	tf2.setText(user.get(2));
+    	tf3.setText(TT.get(0));
+    	tf4.setText(TT.get(1));
+    	ObservableList<String> gioitinh = FXCollections.observableArrayList("Nam", "Nữ", "No3");
+    	tf5.setItems(gioitinh);
+    	tf5.setValue(TT.get(2));
+    	tf6.setText(TT.get(3));
+    	tf7.setText(TT.get(4));
+    	tf8.setText(TT.get(5));
+    	tf9.setText(TT.get(6));
+    	oldIdTT = MainQLTV.maTT;
+    	oldIdUser = MainQLTV.username;
+    }
+    
+    public void onBtn10() {
+    	Alert a = new Alert(AlertType.CONFIRMATION);
+    	a.setHeaderText("Bạn chắc chắn thay đổi thông tin?");
+		Optional<ButtonType> option = a.showAndWait();
+        if (option.get() == ButtonType.OK) {
+        	ObservableList<String> tt = FXCollections.observableArrayList();
+        	tt.add(tf3.getText());  
+        	tt.add(tf4.getText()); 
+        	tt.add(tf5.getValue().toString());
+        	tt.add(tf6.getText());
+        	tt.add(tf7.getText());
+        	tt.add(tf8.getText());
+        	tt.add(tf9.getText());
+        	
+        	ObservableList<String> user = FXCollections.observableArrayList();
+        	user.add(tf1.getText());
+        	user.add(tf3.getText());
+        	user.add(tf2.getText());
+        	
+        	if(ConnService.update("thuthu_minhhn", tt, oldIdTT)==true && ConnService.update("user_minhhn", user, oldIdUser)==true) {
+        		MainQLTV.maTT = tf3.getText(); 
+        		MainQLTV.tenTT = tf4.getText(); helloLabel.setText("Xin chào, " + MainQLTV.tenTT);
+        		MainQLTV.username = tf1.getText(); usernameLabel.setText(MainQLTV.username);
+        		onResetBtnTT();
+        	}
+        } else {}
+    }
+    
+    public void onBtn11() {
+    	buildAccountInfo();
+    	onResetBtnTT();
     }
     
    

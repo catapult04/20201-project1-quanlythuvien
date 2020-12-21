@@ -49,6 +49,7 @@ public class ThuthuModel extends Model{
 		CMND_20183955 = input.get(4);
 		Email_20183955 = input.get(5);
 		Dthoai_20183955 = input.get(6);
+		oldId=MaTT_20183955;
 	}
 	
 	

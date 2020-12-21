@@ -3,7 +3,6 @@ package controller;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
-
 import com.jfoenix.controls.*;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;

@@ -17,6 +17,7 @@ import model.DocgiaModel;
 import model.Model;
 import model.SachModel;
 import model.ThuthuModel;
+import model.UserModel;
 import view.MainQLTV;
 
 public class ConnService {
@@ -104,6 +105,23 @@ public class ConnService {
         }
     }
 	
+	//Cau lenh select from where
+	public static ObservableList<String> select(String tableName, String field, String condition) {
+		try {
+			ObservableList<String> res = FXCollections.observableArrayList();
+			
+			String SQL = "select * from " + tableName + " where " + field + "='" + condition + "'";
+			ResultSet rs = conn.createStatement().executeQuery(SQL);
+			rs.next();
+			for(int i=1; i<=rs.getMetaData().getColumnCount(); i++) {
+				res.add(rs.getString(i));
+			}
+			return res;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	//Cau lenh insert into
 	public static boolean insertInto(String tableName, ObservableList<String> info) {
@@ -152,11 +170,13 @@ public class ConnService {
 	}
 	
 	//cau lenh update
-	public static boolean update(String tableName, ObservableList<String> input) {
+	public static boolean update(String tableName, ObservableList<String> input, String oldId) {
 		ObservableList<String> LFN = FXCollections.observableArrayList();
 		switch(tableName) {
-		case "sach_minhhn" : LFN=SachModel.LIST_FIELDS_NAME; break;
+		case "sach_minhhn" :  LFN=SachModel.LIST_FIELDS_NAME; break;
 		case "docgia_minhhn": LFN=DocgiaModel.LIST_FIELDS_NAME; break;
+		case "thuthu_minhhn": LFN=ThuthuModel.LIST_FIELDS_NAME; break;
+		case "user_minhhn":   LFN=UserModel.LIST_FIELDS_NAME; break;
 		default: LFN=SachModel.LIST_FIELDS_NAME; break;
 		}
 		
@@ -165,8 +185,7 @@ public class ConnService {
 		for(i=0; i<input.size()-1; i++) {
 			SQL = SQL.concat(LFN.get(i) + "='" + input.get(i) + "',");
 		}
-		SQL = SQL.concat(LFN.get(i) + "='" + input.get(i) + "'" + " where " + LFN.get(0) + "='" +  input.get(0) + "'");
-		
+		SQL = SQL.concat(LFN.get(i) + "='" + input.get(i) + "'" + " where " + LFN.get(0) + "='" +  oldId + "'");
 		try {
 			conn.createStatement().execute(SQL);
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -175,9 +194,22 @@ public class ConnService {
 			return true;
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR);
+			e.printStackTrace();
 			alert.setContentText("Có lỗi xảy ra khi update!");
 			alert.showAndWait();
 			return false;
+		}
+	}
+	
+	//counting
+	public static String count(String SQL) {
+		try {
+			ResultSet rs = conn.createStatement().executeQuery(SQL);
+			rs.next();
+			return rs.getString(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "0";
 		}
 	}
 	

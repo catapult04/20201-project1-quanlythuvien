@@ -53,6 +53,7 @@ public class DocgiaModel extends Model{
 		CMND_20183955 = input.get(5);
 		Email_20183955 = input.get(6);
 		Dthoai_20183955 = input.get(7);
+		oldId = getMaDG_20183955();
 	}
 
 	public String getMaDG_20183955() {

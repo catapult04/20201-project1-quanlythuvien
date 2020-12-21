@@ -18,11 +18,11 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="userTextField" onAction="#onLogin" labelFloat="true" layoutX="67.0" layoutY="157.0" prefHeight="26.0" prefWidth="166.0" promptText="Tên đăng nhập">
+            <JFXTextField fx:id="userTextField" labelFloat="true" layoutX="67.0" layoutY="157.0" onAction="#onLogin" prefHeight="26.0" prefWidth="166.0" promptText="Tên đăng nhập">
                <font>
                   <Font size="13.0" />
                </font></JFXTextField>
-            <JFXPasswordField fx:id="passTextField" onAction="#onLogin" focusTraversable="false" labelFloat="true" layoutX="67.0" layoutY="217.0" prefHeight="26.0" prefWidth="166.0" promptText="Mật khẩu">
+            <JFXPasswordField fx:id="passTextField" labelFloat="true" layoutX="67.0" layoutY="217.0" onAction="#onLogin" prefHeight="26.0" prefWidth="166.0" promptText="Mật khẩu">
                <font>
                   <Font size="13.0" />
                </font></JFXPasswordField>
@@ -40,7 +40,7 @@
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></JFXButton>
-            <Label fx:id="forgotPassLabel" onMouseClicked="#onForgotPass" layoutX="95.0" layoutY="339.0" text="Quên mật khẩu?" textFill="#9e1482" />
+            <Label fx:id="forgotPassLabel" layoutX="95.0" layoutY="339.0" onMouseClicked="#onForgotPass" text="Quên mật khẩu?" textFill="#9e1482" />
             <Label fx:id="errorLabel2" layoutX="67.0" layoutY="247.0" prefHeight="21.0" prefWidth="165.0" textFill="RED" />
             <ImageView fitHeight="22.0" fitWidth="31.0" layoutX="36.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="errorLabel1" layoutX="67.0" layoutY="187.0" prefHeight="21.0" prefWidth="165.0" textFill="RED" />
