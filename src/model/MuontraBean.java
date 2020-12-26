@@ -1,18 +1,15 @@
 package model;
 
-import javafx.collections.FXCollections;
 import java.util.Optional;
 import com.jfoenix.controls.JFXButton;
-import application.MainQLTV;
 import controller.MainController;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
-import services.ConnService;
 import services.MuontraBeanService;
 
 public class MuontraBean{
+	private String oldId;
 	private MuontraModel mtModel;
 	private String TenDG_20183955;
 	private String TenTT_20183955;
@@ -23,7 +20,9 @@ public class MuontraBean{
 		this.mtModel = mtModel;
 		TenDG_20183955 = tenDG;
 		TenTT_20183955 = tenTT;
+		this.oldId = mtModel.getMaMT_29183955();
 		
+		MuontraBeanService mtBeanService = new MuontraBeanService();
 		
 		delBtn = new JFXButton();
 		delBtn.setText("Xóa");
@@ -33,10 +32,9 @@ public class MuontraBean{
 			a.setHeaderText("Xác nhận xóa?");
 			Optional<ButtonType> option = a.showAndWait();
 	        if (option.get() == ButtonType.OK) {
-//	        		String str = getMtModel().getMaMT_29183955()
+	        		String str = getMtModel().getMaMT_29183955();
 	        		MainController.dataMT.remove(this);
-//	        		MuontraBeanService 
-//	        		.delete("sach_minhhn", str);
+	        		mtBeanService.delete(str);
 	        } else {}
 		});
 		delBtn.autosize();
@@ -45,17 +43,9 @@ public class MuontraBean{
 		updateBtn.setText("Sửa");
 		updateBtn.setStyle("-fx-background-color: #CCFF66");
 		updateBtn.setOnAction(event -> {
-			Alert a = new Alert(AlertType.CONFIRMATION);
-			a.setHeaderText("Xác nhận xóa?");
-			Optional<ButtonType> option = a.showAndWait();
-	        if (option.get() == ButtonType.OK) {
-//	        		String str = getMtModel().getMaMT_29183955()
-	        		MainController.dataMT.remove(this);
-//	        		MuontraBeanService 
-//	        		.delete("sach_minhhn", str);
-	        } else {}
+			
 		});
-		delBtn.autosize();
+		updateBtn.autosize();
 	}
 	
 	public MuontraModel getMtModel() {
@@ -88,6 +78,21 @@ public class MuontraBean{
 	public void setDelBtn(JFXButton delBtn) {
 		this.delBtn = delBtn;
 	}
-	
+
+	public String getOldId() {
+		return oldId;
+	}
+
+	public void setOldId(String oldId) {
+		this.oldId = oldId;
+	}
+
+	public JFXButton getUpdateBtn() {
+		return updateBtn;
+	}
+
+	public void setUpdateBtn(JFXButton updateBtn) {
+		this.updateBtn = updateBtn;
+	}
 	
 }

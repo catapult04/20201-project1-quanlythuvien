@@ -14,11 +14,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddMTController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateMTController">
    <children>
       <Pane prefHeight="51.0" prefWidth="483.0" style="-fx-background-color: #CCFF66;">
          <children>
-            <Text fill="#15c309" layoutX="44.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đăng ký phiếu mượn sách" textAlignment="CENTER">
+            <Text fill="#15c309" layoutX="49.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update phiếu mượn sách" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -97,7 +97,7 @@
       </GridPane>
       <Pane prefHeight="62.0" prefWidth="358.0">
          <children>
-            <Button fx:id="addBtn" layoutX="33.0" layoutY="21.0" mnemonicParsing="false" onAction="#onAddBtn" prefHeight="31.0" prefWidth="80.0" text="Thêm phiếu" />
+            <Button fx:id="updateBtn" layoutX="33.0" layoutY="21.0" mnemonicParsing="false" onAction="#onUpdateBtn" prefHeight="31.0" prefWidth="80.0" text="Update" />
             <Button fx:id="cancelBtn" layoutX="233.0" layoutY="21.0" mnemonicParsing="false" onAction="#onCancelBtn" prefHeight="31.0" prefWidth="91.0" text="Cancel" />
          </children>
       </Pane>

@@ -11,7 +11,6 @@ import application.MainQLTV;
 import model.DocgiaModel;
 import model.Model;
 import model.MuontraBean;
-import model.MuontraModel;
 import model.SachModel;
 import model.ThuthuModel;
 import services.ConnService;
@@ -237,6 +236,8 @@ public class MainController implements Initializable {
      * Muontra Tab
      ************************/
     public static ObservableList<MuontraBean> dataMT;
+    public static MuontraBean choosingMTBean;
+    
     @FXML private TableView<MuontraBean> tableMT;
     @FXML private TableColumn<MuontraBean, String> c1MT;
     @FXML private TableColumn<MuontraBean, String> c2MT;
@@ -264,10 +265,23 @@ public class MainController implements Initializable {
     	c7MT.setCellValueFactory(cell-> new SimpleStringProperty(String.valueOf(cell.getValue().getMtModel().getNgayhentra_29183955())));
     	c8MT.setCellValueFactory(cell-> new SimpleStringProperty(String.valueOf(cell.getValue().getMtModel().getTiencoc_29183955())));
     	c9MT.setCellValueFactory(new PropertyValueFactory<>("updateBtn"));
-    	c9MT.setCellValueFactory(new PropertyValueFactory<>("delBtn"));
+    	c10MT.setCellValueFactory(new PropertyValueFactory<>("delBtn"));
     	
     	tableMT.setItems(dataMT);
     }
+    
+    public void onAddBtnMT() {
+    	try {
+        	Stage s = new Stage();
+        	Scene scene = new Scene(FXMLLoader.load(getClass() .getResource("/view/AddMTForm.fxml")));
+        	s.setScene(scene);
+        	s.centerOnScreen();
+        	s.show();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
+     
     
     	
 
@@ -382,7 +396,9 @@ public class MainController implements Initializable {
     	
     }
     
-   
+    public void onXuatBtnDG() {
+    	
+    }
 
     /************************
      * Thu thu Tab
