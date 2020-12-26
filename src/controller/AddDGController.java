@@ -3,6 +3,8 @@ package controller;
 import model.DocgiaModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import application.MainQLTV;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,7 +18,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Model;
 import services.ConnService;
-import view.MainQLTV;
 
 public class AddDGController implements Initializable{
 	@Override

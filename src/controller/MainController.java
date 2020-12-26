@@ -7,13 +7,17 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import application.MainQLTV;
 import model.DocgiaModel;
 import model.Model;
+import model.MuontraBean;
 import model.MuontraModel;
 import model.SachModel;
 import model.ThuthuModel;
 import services.ConnService;
-import view.MainQLTV;
+import services.MuontraBeanService;
+import services.ThaotacFile;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -56,7 +60,7 @@ public class MainController implements Initializable {
 		ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
 		buildRadioBtnsSach();
 		
-//		ConnService.buildTable("muontra_minhhn", tableMT, columnsMT, SachModel.LIST_FIELDS_NAME, SachModel.NUMBER_FIELDS);
+		buildMT();
 		
 		ConnService.buildTable("docgia_minhhn", tableDG, DocgiaModel.LIST_FIELDS_NAME, "select * from docgia_minhhn");
 		buildRadioBtnsDG();
@@ -136,16 +140,19 @@ public class MainController implements Initializable {
     @FXML private Button searchBtnSach;
     @FXML private Button resetBtnSach;
     
+    ToggleGroup trangthaisach = new ToggleGroup();
     @FXML private RadioButton radio1Sach;
     @FXML private RadioButton radio2Sach;
     @FXML private RadioButton radio3Sach;
     @FXML private RadioButton radio4Sach;
     
     @FXML private Button addBtnSach;
+    @FXML private Button xuatBtnSach;
     @FXML private Button add2BtnSach;
     
     @FXML private Label countSach;
     @FXML private Button countBtn;
+    
     
     public void onSearchBtnSach() {
     	String from = search5Sach.getText().length()==4 ? search5Sach.getText() : "0000";
@@ -158,6 +165,20 @@ public class MainController implements Initializable {
     			+ " and NamXB_20183955>='" + from + "'"
     			+ " and NamXB_20183955<='" + to + "'";
     	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, SQL);
+    	
+    	RadioButton rb = (RadioButton)trangthaisach.getSelectedToggle(); 
+        if (rb != null) { 
+            String s = rb.getText();
+            if(! s.equals("Tất cả")) {
+            	int sz = dataSach.size();
+            	for(int i=0; i<sz; i++) 
+            		if(! ((SachModel) dataSach.get(i)).getTrangthaisach_20183955().equals(s)) {
+            			dataSach.remove(dataSach.get(i));
+            			sz--;
+            			i--;
+            		}
+            }
+        }
     }
     
     public void onResetBtnSach() {
@@ -172,7 +193,6 @@ public class MainController implements Initializable {
     }
     
     public void buildRadioBtnsSach() {
-    	ToggleGroup trangthaisach = new ToggleGroup();
 		radio1Sach.setToggleGroup(trangthaisach);
 		radio2Sach.setToggleGroup(trangthaisach);
 		radio3Sach.setToggleGroup(trangthaisach);
@@ -182,23 +202,11 @@ public class MainController implements Initializable {
 			@Override
             public void changed(ObservableValue<? extends Toggle> ob, Toggle o1, Toggle o2) 
             { 
-                RadioButton rb = (RadioButton)trangthaisach.getSelectedToggle(); 
-                if (rb != null) { 
-                    String s = rb.getText();
-                    onSearchBtnSach();
-                    if(! s.equals("Tất cả")) {
-                    	int sz = dataSach.size();
-                    	for(int i=0; i<sz; i++) 
-                    		if(! ((SachModel) dataSach.get(i)).getTrangthaisach_20183955().equals(s)) {
-                    			dataSach.remove(dataSach.get(i));
-                    			sz--;
-                    			i--;
-                    		}
-                    }
-                } 
+                onSearchBtnSach();
             }
         });
     }
+    
     
     public void onAddBtnSach(ActionEvent event) {
     	try {
@@ -213,7 +221,11 @@ public class MainController implements Initializable {
     }
     
     public void onAdd2BtnSach(ActionEvent event) {
-    	
+//    	ThaotacFile.ghiFile();
+    }
+    
+    public void onXuatBtnSach() {
+    	ThaotacFile.ghiFile("bangsach");
     }
     
     public void onCountBtn() {
@@ -222,25 +234,42 @@ public class MainController implements Initializable {
     
 
     /************************
-     * Muontra Manager
+     * Muontra Tab
      ************************/
-    @FXML private TableView tableMT;
+    public static ObservableList<MuontraBean> dataMT;
+    @FXML private TableView<MuontraBean> tableMT;
+    @FXML private TableColumn<MuontraBean, String> c1MT;
+    @FXML private TableColumn<MuontraBean, String> c2MT;
+    @FXML private TableColumn<MuontraBean, String> c3MT;
+    @FXML private TableColumn<MuontraBean, String> c4MT;
+    @FXML private TableColumn<MuontraBean, String> c5MT;
+    @FXML private TableColumn<MuontraBean, String> c6MT;
+    @FXML private TableColumn<MuontraBean, String> c7MT;
+    @FXML private TableColumn<MuontraBean, String> c8MT;
+    @FXML private TableColumn<MuontraBean, String> c9MT;
+    @FXML private TableColumn<MuontraBean, String> c10MT;
     
-    
-    @FXML private TableColumn c1MT;
-    @FXML private TableColumn c2MT;
-    @FXML private TableColumn c3MT;
-    @FXML private TableColumn c4MT;
-    @FXML private TableColumn c5MT;
-    @FXML private TableColumn c6MT;
-    
-    @FXML private TextField c1AddMT;
-    @FXML private TextField c2AddMT;
-    @FXML private TextField c3AddMT;
-    @FXML private TextField c4AddMT;
-    @FXML private TextField c5AddMT;
-    @FXML private TextField c6AddMT;
     @FXML private Button addBtnMT;
+
+    public void buildMT() {
+    	MuontraBeanService mtBeanService = new MuontraBeanService();
+    	dataMT = mtBeanService.getAll();
+    	
+    	c1MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getMtModel().getMaMT_29183955()));
+    	c2MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getMtModel().getMaDG_29183955()));
+    	c3MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getTenDG_20183955()));
+    	c4MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getMtModel().getMaTT_29183955()));
+    	c5MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getTenTT_20183955()));
+    	c6MT.setCellValueFactory(cell-> new SimpleStringProperty(String.valueOf(cell.getValue().getMtModel().getNgaymuon_29183955())));
+    	c7MT.setCellValueFactory(cell-> new SimpleStringProperty(String.valueOf(cell.getValue().getMtModel().getNgayhentra_29183955())));
+    	c8MT.setCellValueFactory(cell-> new SimpleStringProperty(String.valueOf(cell.getValue().getMtModel().getTiencoc_29183955())));
+    	c9MT.setCellValueFactory(new PropertyValueFactory<>("updateBtn"));
+    	c9MT.setCellValueFactory(new PropertyValueFactory<>("delBtn"));
+    	
+    	tableMT.setItems(dataMT);
+    }
+    
+    	
 
     
     
@@ -501,5 +530,10 @@ public class MainController implements Initializable {
     	onResetBtnTT();
     }
     
+    
+    
+    /************************
+     * Thong ke Tab
+     ************************/ 
    
 }

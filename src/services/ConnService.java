@@ -3,6 +3,8 @@ package services;
 import java.sql.*;
 
 import com.jfoenix.controls.JFXButton;
+
+import application.MainQLTV;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.collections.FXCollections;
@@ -15,30 +17,34 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import model.DocgiaModel;
 import model.Model;
+import model.MuontraBean;
 import model.SachModel;
 import model.ThuthuModel;
 import model.UserModel;
-import view.MainQLTV;
 
 public class ConnService {
+	public static Connection conn;
 	private static String dbURL = "jdbc:mysql://localhost:3306/qlthuviendb";
 	private static String username = "root";
 	private static String password = "";
-	public static Connection conn;
 	
-	public ConnService() throws ClassNotFoundException {
-		Class.forName("com.mysql.jdbc.Driver");
-		conn = null;	
-		try {			
-			conn = DriverManager.getConnection(dbURL, username, password);
+	public static Connection getConnection() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(dbURL, username, password);
 			if(conn != null)
 				System.out.println("Kết nối thành công!\n");			
 			else
-				System.out.println("Kết nối thất bại!");		
-		} catch(Exception e) {
+				System.out.println("Kết nối thất bại!");
+			return conn;
+		}catch(Exception e) {
 			e.printStackTrace();
+			return null;
 		}
+		
 	}
+	
+	public ConnService(){}
 	
 	//used for buildTable method bellow
 	public static Model createModel(String tableName, ObservableList<String> input) {
@@ -104,6 +110,7 @@ public class ConnService {
             System.out.println("Error on Building Data");             
         }
     }
+	
 	
 	//Cau lenh select from where
 	public static ObservableList<String> select(String tableName, String field, String condition) {
@@ -206,7 +213,8 @@ public class ConnService {
 		try {
 			ResultSet rs = conn.createStatement().executeQuery(SQL);
 			rs.next();
-			return rs.getString(1);
+			String res = rs.getString(1);
+			return res;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "0";

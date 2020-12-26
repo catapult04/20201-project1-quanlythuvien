@@ -3,12 +3,12 @@ package model;
 import java.util.Optional;
 import com.jfoenix.controls.JFXButton;
 
+import application.MainQLTV;
 import controller.MainController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import view.MainQLTV;
 import javafx.scene.control.ButtonType;
 import services.ConnService;
 

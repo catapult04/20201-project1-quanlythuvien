@@ -1,10 +1,12 @@
 package controller;
 
+import javafx.scene.Scene;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import com.jfoenix.controls.*;
-import javafx.scene.Scene;
+import application.MainQLTV;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import services.ConnService;
-import view.MainQLTV;
 
 public class LoginController implements Initializable {
 	   @FXML private Button closeBtn;
@@ -57,10 +58,10 @@ public class LoginController implements Initializable {
 				        Stage stage = (Stage) forgotPassLabel.getScene().getWindow();
 				        stage.setScene(mainScene);
 				        stage.centerOnScreen();
+				        stage.show();
 			    	} else {
 			    		errorLabel2.setText("Sai mật khẩu!");
 			    	}
-			    	
 			    } catch(Exception e) {
 			    	e.printStackTrace();
 			    	errorLabel1.setText("Sai tên đăng nhập!");

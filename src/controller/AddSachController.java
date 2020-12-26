@@ -3,6 +3,7 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.MainQLTV;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,7 +16,6 @@ import javafx.stage.Stage;
 import model.Model;
 import model.SachModel;
 import services.ConnService;
-import view.MainQLTV;
 
 public class AddSachController implements Initializable{
 	@Override
