@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXToggleButton;
 
 import application.MainQLTV;
 import model.DocgiaModel;
@@ -15,7 +16,9 @@ import model.SachModel;
 import model.ThuthuModel;
 import services.ConnService;
 import services.MuontraBeanService;
+import services.SachModelService;
 import services.ThaotacFile;
+import services.UtilService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -34,6 +37,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
@@ -54,6 +58,9 @@ public class MainController implements Initializable {
 	 ***************/
 	@Override //DOAN MA KHOI TAO MOI THU
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		SachModelService sachService = new SachModelService();
+		sachService.updateTrangthai_Tienphat();
+		
 		buildHomeTab();
 		
 		ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
@@ -130,6 +137,11 @@ public class MainController implements Initializable {
     @FXML private TableColumn<Model, JFXButton> c9Sach;
     @FXML private TableColumn<Model, JFXButton> c10Sach;
     
+    @FXML private TextField traTfSach;
+    @FXML private Button traBtnSach;
+    @FXML private Button resetBtnSach2;
+    @FXML private Label resultLabelSach;
+    
     @FXML private TextField search1Sach;
     @FXML private TextField search2Sach;
     @FXML private TextField search3Sach;
@@ -152,6 +164,13 @@ public class MainController implements Initializable {
     @FXML private Label countSach;
     @FXML private Button countBtn;
     
+    public void onTraBtnSach() {
+    	
+    }
+    
+    public void onResetBtnSach2() {
+    	
+    }
     
     public void onSearchBtnSach() {
     	String from = search5Sach.getText().length()==4 ? search5Sach.getText() : "0000";
@@ -251,22 +270,50 @@ public class MainController implements Initializable {
     @FXML private TableColumn<MuontraBean, String> c10MT;
     
     @FXML private Button addBtnMT;
+    @FXML private Button addBtnMT2;
+    @FXML private Button xuatBtnMT;
+    @FXML private JFXToggleButton quahanToggle;
+    
+    public void onQuahanToggle() {
+    	
+    }
+    
+    public void onXuatBtnMT() {
+    	
+    }
+    
+    public void onAddBtnMT2() {
+    	
+    }
+    
 
     public void buildMT() {
     	MuontraBeanService mtBeanService = new MuontraBeanService();
     	dataMT = mtBeanService.getAll();
     	
-    	c1MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getMtModel().getMaMT_29183955()));
-    	c2MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getMtModel().getMaDG_29183955()));
+    	c1MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getMtModel().getMaMT_20183955()));
+    	c2MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getMtModel().getMaDG_20183955()));
     	c3MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getTenDG_20183955()));
-    	c4MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getMtModel().getMaTT_29183955()));
+    	c4MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getMtModel().getMaTT_20183955()));
     	c5MT.setCellValueFactory(cell-> new SimpleStringProperty(cell.getValue().getTenTT_20183955()));
-    	c6MT.setCellValueFactory(cell-> new SimpleStringProperty(String.valueOf(cell.getValue().getMtModel().getNgaymuon_29183955())));
-    	c7MT.setCellValueFactory(cell-> new SimpleStringProperty(String.valueOf(cell.getValue().getMtModel().getNgayhentra_29183955())));
-    	c8MT.setCellValueFactory(cell-> new SimpleStringProperty(String.valueOf(cell.getValue().getMtModel().getTiencoc_29183955())));
+    	c6MT.setCellValueFactory(cell-> new SimpleStringProperty(String.valueOf(cell.getValue().getMtModel().getNgaymuon_20183955())));
+    	c7MT.setCellValueFactory(cell-> new SimpleStringProperty(String.valueOf(cell.getValue().getMtModel().getNgayhentra_20183955())));
+    	c8MT.setCellValueFactory(cell-> new SimpleStringProperty(String.valueOf(cell.getValue().getMtModel().getTiencoc_20183955())));
     	c9MT.setCellValueFactory(new PropertyValueFactory<>("updateBtn"));
     	c10MT.setCellValueFactory(new PropertyValueFactory<>("delBtn"));
     	
+    	//on double clicked for row
+        tableMT.setRowFactory( tv -> {
+            TableRow<MuontraBean> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                	choosingMTBean = tableMT.getSelectionModel().getSelectedItem();
+                    UtilService.popUp("DetailMTForm");
+                }
+            });
+            return row ;
+        });
+        
     	tableMT.setItems(dataMT);
     }
     
@@ -282,10 +329,6 @@ public class MainController implements Initializable {
     	}
     }
      
-    
-    	
-
-    
     
     /************************
      * Doc gia Tab

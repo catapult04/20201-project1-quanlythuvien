@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="424.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DetailMTController">
+   <children>
+      <Pane prefHeight="51.0" prefWidth="483.0" style="-fx-background-color: #CCFF66;">
+         <children>
+            <Text fill="#15c309" layoutX="198.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chi tiết phiếu mượn trả" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Text>
+         </children>
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin>
+      </Pane>
+      <Pane prefHeight="342.0" prefWidth="639.0">
+         <children>
+            <Text layoutX="30.0" layoutY="6.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mã phiếu:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="idLabel" layoutX="107.0" layoutY="6.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="133.59998321533203">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <TableView fx:id="table" layoutX="14.0" layoutY="105.0" prefHeight="163.0" prefWidth="612.0">
+              <columns>
+                <TableColumn fx:id="c1" prefWidth="99.20001029968262" text="Mã sách" />
+                <TableColumn fx:id="c2" prefWidth="111.20001220703125" text="Ngày trả" />
+                  <TableColumn fx:id="c3" prefWidth="85.60003662109375" text="Tiền phạt" />
+                  <TableColumn fx:id="c4" prefWidth="191.199951171875" text="Ghi chú" />
+                  <TableColumn fx:id="c5" prefWidth="37.60003662109375" />
+                  <TableColumn fx:id="c6" prefWidth="37.5999755859375" />
+                  <TableColumn fx:id="c7" minWidth="0.0" prefWidth="42.4000244140625" text="Trả" />
+              </columns>
+            </TableView>
+            <TextField layoutX="30.0" layoutY="49.0" prefHeight="25.0" prefWidth="101.0" promptText="Nhập mã sách" />
+            <TextField layoutX="134.0" layoutY="49.0" prefHeight="25.0" prefWidth="190.0" promptText="Ghi chú" />
+            <Button layoutX="336.0" layoutY="49.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="0.0" text="+">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Text layoutX="30.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thêm sách vào phiếu mượn:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Button fx:id="trahetBtn" layoutX="574.0" layoutY="279.0" mnemonicParsing="false" onAction="#onTrahetBtn" prefHeight="25.0" prefWidth="51.0" text="Trả">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <DatePicker fx:id="picker" layoutX="438.0" layoutY="279.0" prefHeight="25.0" prefWidth="124.0" />
+            <Label layoutX="356.0" layoutY="283.0" text="Chọn ngày trả:" />
+            <Button layoutX="560.0" layoutY="74.0" mnemonicParsing="false" text="Chọn hết" />
+         </children>
+      </Pane>
+   </children>
+</VBox>

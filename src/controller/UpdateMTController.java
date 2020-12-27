@@ -2,6 +2,8 @@ package controller;
 
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXDatePicker;
@@ -26,7 +28,7 @@ import services.DocgiaModelService;
 import services.MuontraBeanService;
 import services.MuontraModelService;
 
-public class AddMTController implements Initializable{
+public class UpdateMTController implements Initializable{
 	@FXML private TextField tf1;
 	@FXML private ComboBox<String> tf2;
 	@FXML private Label lb1; //name
@@ -36,16 +38,31 @@ public class AddMTController implements Initializable{
 	@FXML private DatePicker tf5;
 	@FXML private TextField tf6;
 	
-	@FXML private Button addBtn;
+	@FXML private Button updateBtn;
 	@FXML private Button cancelBtn;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		DocgiaModelService dgService = new DocgiaModelService();
+		
+		MuontraModel model = MainController.choosingMTBean.getMtModel();
+		tf1.setText(model.getMaMT_29183955());
 		tf3.setText(MainQLTV.maTT);
 		tf3.setEditable(false);
 		DocgiaModelService ser = new DocgiaModelService();
 		tf2.setItems(ser.getAllId());
 		tf2.setVisibleRowCount(8);
+		tf2.setValue(model.getMaDG_29183955());
+		lb1.setText(dgService.getNameById(model.getMaDG_29183955()));
+		lb2.setText(dgService.getCMNDById(model.getMaDG_29183955()));
+		
+		LocalDate from = ((Date)model.getNgaymuon_29183955()).toLocalDate();
+		tf4.setValue(from);
+		
+		LocalDate to = ((Date)model.getNgayhentra_29183955()).toLocalDate();
+		tf5.setValue(to);
+		
+		tf6.setText(String.valueOf(model.getTiencoc_29183955()));
 	}
 	
 	public void onTf2() {
@@ -54,20 +71,18 @@ public class AddMTController implements Initializable{
 		lb2.setText(ser.getCMNDById(tf2.getValue()));
 	}
 	
-	public void onAddBtn() {
+	public void onUpdateBtn() {
 		DocgiaModelService dgService = new DocgiaModelService();
 		MuontraBeanService mtService = new MuontraBeanService();
 		
 		MuontraModel mtModel = new MuontraModel(tf1.getText(), tf2.getValue(), tf3.getText(), Date.valueOf(tf4.getValue()), Date.valueOf(tf5.getValue()), Integer.parseInt(tf6.getText()) );
 		MuontraBean mtBean = new MuontraBean(mtModel, dgService.getNameById(tf2.getValue()), MainQLTV.tenTT);
 		
-		if(mtService.insert(mtBean)==true) {
+		if(mtService.update(MainController.choosingMTBean.getMtModel().getMaMT_29183955(), mtModel)==true) {
+			MainController.dataMT.remove(MainController.choosingMTBean);
 			MainController.dataMT.add(mtBean);
-			tf1.setText("");
-			tf2.setValue("");
-			tf5.setValue(null);
-			tf6.setText("0");
-		}
+			MainController.choosingMTBean = mtBean;
+		};
 	}
 	
 	public void onCancelBtn(ActionEvent event) {

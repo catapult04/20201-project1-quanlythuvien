@@ -1,5 +1,7 @@
 package application;
 	
+import java.sql.Date;
+
 import controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +22,8 @@ import javafx.scene.Scene;
  */
 
 public class MainQLTV extends Application {
+	public static Date nowDate;
+	public static String nowString;
 	public static String maTT, tenTT, username;
 	public static MainController control;
 	
@@ -27,7 +31,12 @@ public class MainQLTV extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			ConnService.conn = ConnService.getConnection();
-	        Scene loginScene = new Scene(FXMLLoader.load(getClass() .getResource("/view/LoginScene.fxml")));
+			long millis = System.currentTimeMillis();
+			nowDate = new Date(millis);
+			nowString = nowDate.toString();
+			System.out.println(nowString);
+			
+	        Scene loginScene = new Scene(FXMLLoader.load(getClass().getResource("/view/LoginScene.fxml")));
 			//loginScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(loginScene);
 	        primaryStage.setTitle("QUẢN LÝ THƯ VIỆN");

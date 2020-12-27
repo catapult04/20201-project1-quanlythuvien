@@ -57,8 +57,8 @@ public class LoginController implements Initializable {
 			    		Scene mainScene = new Scene(FXMLLoader.load(getClass().getResource("/view/MainScene.fxml")));
 				        Stage stage = (Stage) forgotPassLabel.getScene().getWindow();
 				        stage.setScene(mainScene);
-				        stage.centerOnScreen();
 				        stage.show();
+				        stage.centerOnScreen();
 			    	} else {
 			    		errorLabel2.setText("Sai mật khẩu!");
 			    	}
