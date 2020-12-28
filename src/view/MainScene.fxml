@@ -279,7 +279,7 @@
                         <DatePicker fx:id="hento" layoutX="282.0" layoutY="158.0" prefHeight="25.0" prefWidth="112.0" promptText="dd/mm/yyyy" />
                         <JFXToggleButton fx:id="quahanToggle" layoutX="408.0" layoutY="23.0" onAction="#onQuahanToggle" prefHeight="58.0" prefWidth="225.0" text="Các phiếu quá hạn" />
                         <Label layoutX="985.0" layoutY="232.0" text="Click đúp vào dòng cần xem/ sửa thông tin chi tiết mượn trả" />
-                        <Button fx:id="addBtnMT2" layoutX="704.0" layoutY="76.0" mnemonicParsing="false" onAction="#onAddBtnMT2" prefHeight="31.0" prefWidth="188.0" text="Thêm nhiều phiếu mượn từ file..." textAlignment="CENTER" />
+                        <Button fx:id="add2BtnMT" layoutX="704.0" layoutY="76.0" mnemonicParsing="false" onAction="#onAdd2BtnMT" prefHeight="31.0" prefWidth="188.0" text="Thêm nhiều phiếu mượn từ file..." textAlignment="CENTER" />
                         <Button layoutX="704.0" layoutY="115.0" mnemonicParsing="false" onAction="#onXuatBtnMT" prefHeight="31.0" prefWidth="188.0" text="Xuất bảng dưới ra file" textAlignment="CENTER" fx:id="xuatBtnMT" />
                         <ComboBox fx:id="search2MT" layoutX="33.0" layoutY="69.0" prefWidth="150.0" promptText="Mã độc giả" />
                         <ComboBox fx:id="search3MT" layoutX="33.0" layoutY="98.0" prefWidth="150.0" promptText="Mã thủ thư" />
@@ -416,6 +416,12 @@
                               </Label>
                            </children>
                         </Pane>
+                        <Button layoutX="638.0" layoutY="56.0" mnemonicParsing="false" onAction="#onXuatBtnTT" prefHeight="31.0" prefWidth="152.0" text="Xuất bảng dưới ra file" fx:id="xuatBtnTT" />
+                        <Text layoutX="638.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thao tác:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
                      </children></Pane>
                   <Pane prefHeight="506.0" prefWidth="1330.0">
                      <children>
@@ -544,8 +550,8 @@
                   <Button fx:id="NXBBtn" layoutX="69.0" layoutY="86.0" mnemonicParsing="false" onAction="#onNXBBtn" prefHeight="26.0" prefWidth="174.0" text="Thống kê sách theo NXB" />
                   <Button fx:id="namXBBtn" layoutX="67.0" layoutY="122.0" mnemonicParsing="false" onAction="#onNamXBBtn" prefHeight="26.0" prefWidth="175.0" text="Thống kê sách theo Năm XB" />
                   <Button fx:id="statusBtn" layoutX="66.0" layoutY="194.0" mnemonicParsing="false" onAction="#onStatusBtn" prefHeight="26.0" prefWidth="178.0" text="Thống kê sách theo Trạng thái" />
-                  <Button fx:id="phieuTheoDGBtn" layoutX="309.0" layoutY="51.0" mnemonicParsing="false" onAction="#onPhieuTheoDGBtn" text="Thống kê Phiếu mượn trả theo Độc giả" />
-                  <Button fx:id="DGTheoNSBtn" layoutX="309.0" layoutY="86.0" mnemonicParsing="false" onAction="#onDGTheoNSBtn" prefHeight="26.0" prefWidth="222.0" text="Thống kê Độc giả theo Năm sinh" />
+                  <Button fx:id="phieuTheoDGBtn" layoutX="309.0" layoutY="51.0" mnemonicParsing="false" onAction="#onPhieuTheoDGBtn" prefHeight="26.0" prefWidth="243.0" text="Thống kê Phiếu mượn trả theo Độc giả" />
+                  <Button fx:id="DGTheoNSBtn" layoutX="309.0" layoutY="158.0" mnemonicParsing="false" onAction="#onDGTheoNSBtn" prefHeight="26.0" prefWidth="222.0" text="Thống kê Độc giả theo Năm sinh" />
                   <TableView fx:id="tableTK" layoutX="82.0" layoutY="273.0" prefHeight="404.0" prefWidth="454.0">
                     <columns>
                       <TableColumn fx:id="c1TK" prefWidth="304.80006408691406" text="Nội dung" />
@@ -560,6 +566,8 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <Button fx:id="phieuTheoNgaymuonBtn" layoutX="309.0" layoutY="86.0" mnemonicParsing="false" onAction="#onPhieuTheoNgaymuonBtn" text="Thống kê Phiếu mượn trả theo Ngày mượn" />
+                  <Button fx:id="phieuTheoNgayhenBtn" layoutX="309.0" layoutY="122.0" mnemonicParsing="false" onAction="#onPhieuTheoNgayhenBtn" prefHeight="26.0" prefWidth="245.0" text="Thống kê Phiếu mượn trả theo Ngày hẹn" />
                </children></AnchorPane>
         </content>
       </Tab>

@@ -253,7 +253,7 @@ public class MainController implements Initializable {
     }
     
     public void onXuatBtnSach() {
-    	ThaotacFile.ghiFile("bangsach");
+    	ThaotacFile.ghiFileSach("bangsach", dataSach);
     }
     
     public void onCountBtn() {
@@ -290,7 +290,7 @@ public class MainController implements Initializable {
     @FXML private Button resetBtnMT;
     
     @FXML private Button addBtnMT;
-    @FXML private Button addBtnMT2;
+    @FXML private Button add2BtnMT;
     @FXML private Button xuatBtnMT;
     @FXML private JFXToggleButton quahanToggle;
     
@@ -328,7 +328,7 @@ public class MainController implements Initializable {
     	
     }
     
-    public void onAddBtnMT2() {
+    public void onAdd2BtnMT() {
     	
     }
     
@@ -497,7 +497,7 @@ public class MainController implements Initializable {
     }
 
     /************************
-     * Thu thu Tab
+     * thu thu tab
      ************************/
     @FXML private TableView tableTT;
     public ObservableList<Model> dataTT;
@@ -535,6 +535,12 @@ public class MainController implements Initializable {
     @FXML private TextField tf9;
     @FXML private Button btn10;
     @FXML private Button btn11;
+    
+    @FXML private Button xuatBtnTT;
+    
+    public void onXuatBtnTT() {
+    	
+    }
     
     public void onSearchBtnTT() {
     	String from = search6TT.getText().length()==4 ? search6TT.getText() : "0000";
@@ -664,6 +670,8 @@ public class MainController implements Initializable {
     @FXML private Button tacgiaBtn;
     @FXML private Button statusBtn;
     @FXML private Button phieuTheoDGBtn;
+    @FXML private Button phieuTheoNgaymuonBtn;
+    @FXML private Button phieuTheoNgayhenBtn;
     @FXML private Button DGTheoNSBtn;
     
     public void formatTableTK() {
@@ -687,7 +695,7 @@ public class MainController implements Initializable {
     	tableTK.setItems(dataTK);
     	sumTK.setText(String.valueOf(tkser.total));
     	buildPieChart();
-    	tenbangTK.setText(theloaiBtn.getText());
+    	tenbangTK.setText("Thống kê sách theo thể loại");
     }
     
     public void onNXBBtn() {
@@ -695,6 +703,8 @@ public class MainController implements Initializable {
     	dataTK = tkser.thongkeSach("NhaXB_20183955");
     	tableTK.setItems(dataTK);
     	sumTK.setText(String.valueOf(tkser.total));
+    	buildPieChart();
+    	tenbangTK.setText("Thống kê sách theo nhà xuất bản");
     }
     
     public void onNamXBBtn() {
@@ -703,6 +713,7 @@ public class MainController implements Initializable {
     	tableTK.setItems(dataTK);
     	sumTK.setText(String.valueOf(tkser.total));
     	buildPieChart();
+    	tenbangTK.setText("Thống kê sách theo năm xuất bản");
     }
     
     public void onTacgiaBtn() {
@@ -711,6 +722,7 @@ public class MainController implements Initializable {
     	tableTK.setItems(dataTK);
     	sumTK.setText(String.valueOf(tkser.total));
     	buildPieChart();
+    	tenbangTK.setText("Thống kê sách theo tác giả");
     }
     
     public void onStatusBtn() {
@@ -719,6 +731,7 @@ public class MainController implements Initializable {
     	tableTK.setItems(dataTK);
     	sumTK.setText(String.valueOf(tkser.total));
     	buildPieChart();
+    	tenbangTK.setText("Thống kê sách theo trạng thái");
     }
     
     public void onPhieuTheoDGBtn() {
@@ -727,6 +740,23 @@ public class MainController implements Initializable {
     	tableTK.setItems(dataTK);
     	sumTK.setText(String.valueOf(tkser.total));
     	buildPieChart();
+    	tenbangTK.setText("Thống kê phiếu theo mã độc giả");
+    }
+    public void onPhieuTheoNgaymuonBtn() {
+    	ThongkeService tkser = new ThongkeService();
+    	dataTK = tkser.thongkePhieu("Ngaymuon_20183955");
+    	tableTK.setItems(dataTK);
+    	sumTK.setText(String.valueOf(tkser.total));
+    	buildPieChart();
+    	tenbangTK.setText("Thống kê phiếu theo ngày mượn");
+    }
+    public void onPhieuTheoNgayhenBtn() {
+    	ThongkeService tkser = new ThongkeService();
+    	dataTK = tkser.thongkePhieu("Ngayhentra_20183955");
+    	tableTK.setItems(dataTK);
+    	sumTK.setText(String.valueOf(tkser.total));
+    	buildPieChart();
+    	tenbangTK.setText("Thống kê phiếu theo ngày hẹn trả");
     }
     
     public void onDGTheoNSBtn() {
@@ -735,5 +765,6 @@ public class MainController implements Initializable {
     	tableTK.setItems(dataTK);
     	sumTK.setText(String.valueOf(tkser.total));
     	buildPieChart();
+    	tenbangTK.setText("Thống kê độc giả theo năm sinh");
     }
 }
