@@ -1,13 +1,38 @@
 package services;
-
+import javafx.collections.FXCollections;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class SachModelService {
+	public ObservableList<String> getAllId(){
+		ObservableList<String> list = FXCollections.observableArrayList();
+		try {
+			String sql = "select Masach_20183955 from sach_minhhn";
+			ResultSet rs = ConnService.conn.createStatement().executeQuery(sql);
+			while(rs.next()) {
+				list.add(rs.getString(1));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public String getNameById(String id) {
+		try {
+			String sql = "select Tensach_20183955 from sach_minhhn where Masach_20183955='" + id + "'";
+			ResultSet rs = ConnService.conn.createStatement().executeQuery(sql);
+			rs.next();
+			String res = rs.getString(1);
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}	
+	}
+	
 	public void updateTrangthai_Tienphat() {
 		try {
 			MuontraBeanService mtBeanService = new MuontraBeanService();
@@ -19,7 +44,7 @@ public class SachModelService {
 				for(int j=0; j<idSach.size(); j++) {
 					if(getTrangthaiById(idSach.get(j)).equals("Đang mượn")) {
 						setTrangthaiById(idSach.get(j), "Quá hạn");
-						ctService.setTienphat(idMTQuaHan.get(i), idSach.get(j), getDongiaById(idSach.get(j)));
+						ctService.setTienphatById(idMTQuaHan.get(i), idSach.get(j), getDongiaById(idSach.get(j))/3);
 					}
 				}
 			}
@@ -31,7 +56,7 @@ public class SachModelService {
 	
 	public int getDongiaById(String id) {
 		try {
-			String sql = "select Dongia_20183955 from sach_minhn where Masach_20183955 = ?";
+			String sql = "select Dongia_20183955 from sach_minhhn where Masach_20183955 = ?";
 	        PreparedStatement preparedStatement = ConnService.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, id);
 	        
@@ -49,7 +74,7 @@ public class SachModelService {
 	
 	public String getTrangthaiById(String id) {
 		try {
-			String sql = "select Trangthaisach_20183955 from sach_minhn where Masach_20183955 = ?";
+			String sql = "select Trangthaisach_20183955 from sach_minhhn where Masach_20183955 = ?";
 	        PreparedStatement preparedStatement = ConnService.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, id);
 	        
@@ -67,15 +92,13 @@ public class SachModelService {
 	
 	public boolean setTrangthaiById(String id, String status) {
 		try {
-			String sql = "UPDATE sach_minhhn set Trangthaisach_20183955=? where Masach_20183955 = ?";
+			String sql = "UPDATE sach_minhhn set Trangthaisach_20183955 = ? where Masach_20183955 = ?";
 	        PreparedStatement preparedStatement = ConnService.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			preparedStatement.setString(1, status);
-			preparedStatement.setString(1, id);
+	        preparedStatement.setString(1, status);
+	        preparedStatement.setString(2, id);
 	        
 			preparedStatement.execute();
 			preparedStatement.close();
-			
-			UtilService.success();
 			
 			return true;
 		} catch(Exception e) {

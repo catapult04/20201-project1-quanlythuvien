@@ -12,10 +12,23 @@ public class UtilService {
 		a.setHeaderText("Thành công");
 		a.showAndWait();
 	}
+	public static void success(String content) {
+		Alert a = new Alert(AlertType.INFORMATION);
+		a.setHeaderText("Thành công");
+		a.setContentText(content);
+		a.showAndWait();
+	}
 	
 	public static void fail() {
 		Alert a = new Alert(AlertType.ERROR);
 		a.setHeaderText("Thất bại");
+		a.showAndWait();
+	}
+	
+	public static void fail(String content) {
+		Alert a = new Alert(AlertType.ERROR);
+		a.setHeaderText("Thất bại");
+		a.setContentText(content);
 		a.showAndWait();
 	}
 	

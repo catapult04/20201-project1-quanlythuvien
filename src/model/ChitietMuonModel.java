@@ -1,5 +1,6 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Alert.AlertType;
 import services.ChitietMuonService;
+import services.SachModelService;
 import services.UtilService;
 
 public class ChitietMuonModel {
@@ -24,6 +26,8 @@ public class ChitietMuonModel {
 	private CheckBox traBtn;
 	private JFXButton delBtn;
 	
+	public String oldStatus;
+	
 	public ChitietMuonModel(String maMT_20183955, String masach_20183955, Date ngaytra_20183955,
 			int tienphat_20183955, String ghichu_20183955) {
 		super();
@@ -32,6 +36,7 @@ public class ChitietMuonModel {
 		Ngaytra_20183955 = ngaytra_20183955;
 		Tienphat_20183955 = tienphat_20183955;
 		Ghichu_20183955 = ghichu_20183955;
+		oldStatus=null;
 		
 		delBtn = new JFXButton();
 		delBtn.setText("Xóa");
@@ -41,10 +46,13 @@ public class ChitietMuonModel {
 			a.setHeaderText("Xác nhận xóa?");
 			Optional<ButtonType> option = a.showAndWait();
 	        if (option.get() == ButtonType.OK) {
+	        	SachModelService sachService = new SachModelService();
+	        	sachService.setTrangthaiById(getMasach_20183955(), "Có sẵn");
+	        	
 	        	ChitietMuonService service = new ChitietMuonService();
 	        	DetailMTController.data.remove(this);
 	        	service.delete(getMaMT_20183955(), getMasach_20183955());
-	        } else {}
+	        }
 		});
 		delBtn.autosize();
 		
@@ -61,6 +69,19 @@ public class ChitietMuonModel {
 		traBtn.autosize();
 	}
 	
+	public void setField(int pos, String value) {
+		try {
+			switch(pos) {
+			case 1: setMaMT_20183955(value);
+			case 2: setMasach_20183955(value);
+			case 3: setNgaytra_20183955(new SimpleDateFormat("yyyy-MM-dd").parse(value));
+			case 4: setTienphat_20183955(Integer.parseInt(value));	
+			default: setGhichu_20183955(value);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public String getMaMT_20183955() {
 		return MaMT_20183955;
@@ -103,13 +124,12 @@ public class ChitietMuonModel {
 		this.saveBtn = saveBtn;
 	}
 
-
-	public JFXButton getTraBtn() {
+	public CheckBox getTraBtn() {
 		return traBtn;
 	}
 
 
-	public void setTraBtn(JFXButton traBtn) {
+	public void setTraBtn(CheckBox traBtn) {
 		this.traBtn = traBtn;
 	}
 

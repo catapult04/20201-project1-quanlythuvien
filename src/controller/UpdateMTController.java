@@ -46,23 +46,23 @@ public class UpdateMTController implements Initializable{
 		DocgiaModelService dgService = new DocgiaModelService();
 		
 		MuontraModel model = MainController.choosingMTBean.getMtModel();
-		tf1.setText(model.getMaMT_29183955());
+		tf1.setText(model.getMaMT_20183955());
 		tf3.setText(MainQLTV.maTT);
 		tf3.setEditable(false);
 		DocgiaModelService ser = new DocgiaModelService();
 		tf2.setItems(ser.getAllId());
 		tf2.setVisibleRowCount(8);
-		tf2.setValue(model.getMaDG_29183955());
-		lb1.setText(dgService.getNameById(model.getMaDG_29183955()));
-		lb2.setText(dgService.getCMNDById(model.getMaDG_29183955()));
+		tf2.setValue(model.getMaDG_20183955());
+		lb1.setText(dgService.getNameById(model.getMaDG_20183955()));
+		lb2.setText(dgService.getCMNDById(model.getMaDG_20183955()));
 		
-		LocalDate from = ((Date)model.getNgaymuon_29183955()).toLocalDate();
+		LocalDate from = ((Date)model.getNgaymuon_20183955()).toLocalDate();
 		tf4.setValue(from);
 		
-		LocalDate to = ((Date)model.getNgayhentra_29183955()).toLocalDate();
+		LocalDate to = ((Date)model.getNgayhentra_20183955()).toLocalDate();
 		tf5.setValue(to);
 		
-		tf6.setText(String.valueOf(model.getTiencoc_29183955()));
+		tf6.setText(String.valueOf(model.getTiencoc_20183955()));
 	}
 	
 	public void onTf2() {
@@ -78,7 +78,7 @@ public class UpdateMTController implements Initializable{
 		MuontraModel mtModel = new MuontraModel(tf1.getText(), tf2.getValue(), tf3.getText(), Date.valueOf(tf4.getValue()), Date.valueOf(tf5.getValue()), Integer.parseInt(tf6.getText()) );
 		MuontraBean mtBean = new MuontraBean(mtModel, dgService.getNameById(tf2.getValue()), MainQLTV.tenTT);
 		
-		if(mtService.update(MainController.choosingMTBean.getMtModel().getMaMT_29183955(), mtModel)==true) {
+		if(mtService.update(MainController.choosingMTBean.getMtModel().getMaMT_20183955(), mtModel)==true) {
 			MainController.dataMT.remove(MainController.choosingMTBean);
 			MainController.dataMT.add(mtBean);
 			MainController.choosingMTBean = mtBean;

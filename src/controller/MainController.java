@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -14,6 +15,7 @@ import model.Model;
 import model.MuontraBean;
 import model.SachModel;
 import model.ThuthuModel;
+import services.ChitietMuonService;
 import services.ConnService;
 import services.MuontraBeanService;
 import services.SachModelService;
@@ -34,6 +36,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -122,7 +125,7 @@ public class MainController implements Initializable {
 	
 	
     /*******************
-     * Sach Tab
+     * sach tab
      *******************/
 	@FXML private TableView<Model> tableSach;
 	public ObservableList<Model> dataSach;
@@ -165,11 +168,13 @@ public class MainController implements Initializable {
     @FXML private Button countBtn;
     
     public void onTraBtnSach() {
-    	
+    	ChitietMuonService ctMTService = new ChitietMuonService();
+    	resultLabelSach.setText("Kết quả: " + ctMTService.getIdByMasach(traTfSach.getText()));
     }
     
     public void onResetBtnSach2() {
-    	
+    	traTfSach.clear();
+    	ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
     }
     
     public void onSearchBtnSach() {
@@ -252,7 +257,7 @@ public class MainController implements Initializable {
     
 
     /************************
-     * Muontra Tab
+     * muon tra tab
      ************************/
     public static ObservableList<MuontraBean> dataMT;
     public static MuontraBean choosingMTBean;
@@ -269,13 +274,49 @@ public class MainController implements Initializable {
     @FXML private TableColumn<MuontraBean, String> c9MT;
     @FXML private TableColumn<MuontraBean, String> c10MT;
     
+    @FXML private TextField search1MT;
+    @FXML private ComboBox<String> search2MT;
+    @FXML private ComboBox<String> search3MT;
+    @FXML private DatePicker muonfrom;
+    @FXML private DatePicker muonto;
+    @FXML private DatePicker henfrom;
+    @FXML private DatePicker hento;
+    @FXML private Button searchBtnMT;
+    @FXML private Button resetBtnMT;
+    
     @FXML private Button addBtnMT;
     @FXML private Button addBtnMT2;
     @FXML private Button xuatBtnMT;
     @FXML private JFXToggleButton quahanToggle;
     
-    public void onQuahanToggle() {
+    public void onSearchBtnMT() {
+    	MuontraBeanService mtBeanService = new MuontraBeanService();
+    	Date muonfrom_ = muonfrom.getValue()!=null ? Date.valueOf(muonfrom.getValue()) : Date.valueOf("0000-1-1");
+    	Date muonto_ = muonto.getValue()!=null ? Date.valueOf(muonto.getValue()) : Date.valueOf("9999-12-31");
+    	Date henfrom_ = henfrom.getValue()!=null ? Date.valueOf(henfrom.getValue()) : Date.valueOf("0000-1-1");
+    	Date hento_ = hento.getValue()!=null ? Date.valueOf(hento.getValue()) : Date.valueOf("9999-12-31");
+    	dataMT = mtBeanService.getAll(search1MT.getText(), search2MT.getValue(), search3MT.getValue(), muonfrom_, muonto_, henfrom_, hento_);
+    	tableMT.setItems(dataMT);
+    }
+    
+    public void onResetBtnMT() {
+    	MuontraBeanService mtBeanService = new MuontraBeanService();
+    	dataMT = mtBeanService.getAll();
+    	tableMT.setItems(dataMT);
     	
+    	buildComboBoxMT();
+    	quahanToggle.setSelected(false);
+    }
+    
+    public void onQuahanToggle() {
+    	MuontraBeanService ser = new MuontraBeanService();
+    	if(quahanToggle.isSelected()==true) {
+    		dataMT = ser.getQuaHan();
+    		tableMT.setItems(dataMT);
+    	} else {
+    		dataMT = ser.getAll();
+    		tableMT.setItems(dataMT);
+    	}
     }
     
     public void onXuatBtnMT() {
@@ -286,8 +327,15 @@ public class MainController implements Initializable {
     	
     }
     
+    public void buildComboBoxMT() {
+    	MuontraBeanService ser = new MuontraBeanService();
+    	search2MT.setItems(ser.getAllMaDG()); search2MT.setValue("");
+    	search3MT.setItems(ser.getAllMaTT()); search3MT.setValue("");
+    }
 
     public void buildMT() {
+    	buildComboBoxMT();
+    	
     	MuontraBeanService mtBeanService = new MuontraBeanService();
     	dataMT = mtBeanService.getAll();
     	
