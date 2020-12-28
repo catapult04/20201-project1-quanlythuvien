@@ -55,7 +55,6 @@ public class DetailMTController implements Initializable{
 	@FXML private TableColumn<ChitietMuonModel, String> c5;
 	@FXML private TableColumn<ChitietMuonModel, String> c6;
 	@FXML private TableColumn<ChitietMuonModel, String> c7;
-	ObservableList<TableColumn<ChitietMuonModel, String>> columns = FXCollections.observableArrayList(c1,c2,c3,c4);
 	
 	@FXML private Button resetBtn;
 	@FXML private DatePicker picker;
@@ -85,20 +84,29 @@ public class DetailMTController implements Initializable{
     	c5.setCellValueFactory(new PropertyValueFactory<>("saveBtn"));
     	c6.setCellValueFactory(new PropertyValueFactory<>("delBtn"));
     	c7.setCellValueFactory(new PropertyValueFactory<>("traBtn"));
-    	
+    
     	//dinh dang: cho phep sua cac o
-//    	for(int i = 0; i<4; i++) {
-//          	columns.get(i).setCellFactory(TextFieldTableCell.forTableColumn());
-//          	columns.get(i).setOnEditCommit(
-//          		new EventHandler<CellEditEvent<ChitietMuonModel, String>>() {
-//          	        @Override
-//          	        public void handle(CellEditEvent<ChitietMuonModel, String> t) {
-//          	        	int pos = t.getTablePosition().getColumn();
-//          	            ((ChitietMuonModel) t.getTableView().getItems().get(t.getTablePosition().getRow())).setField(pos, t.getNewValue());
-//          	        }
-//          	    }
-//          	);
-//    	}
+    	c3.setCellFactory(TextFieldTableCell.forTableColumn());
+      	c3.setOnEditCommit(
+      		new EventHandler<CellEditEvent<ChitietMuonModel, String>>() {
+      	        @Override
+      	        public void handle(CellEditEvent<ChitietMuonModel, String> t) {
+      	        	int pos = t.getTablePosition().getColumn();
+      	            ((ChitietMuonModel) t.getTableView().getItems().get(t.getTablePosition().getRow())).setField(pos, t.getNewValue());
+      	        }
+      	    }
+      	);
+      	c4.setCellFactory(TextFieldTableCell.forTableColumn());
+      	c4.setOnEditCommit(
+      		new EventHandler<CellEditEvent<ChitietMuonModel, String>>() {
+      	        @Override
+      	        public void handle(CellEditEvent<ChitietMuonModel, String> t) {
+      	        	int pos = t.getTablePosition().getColumn();
+      	            ((ChitietMuonModel) t.getTableView().getItems().get(t.getTablePosition().getRow())).setField(pos, t.getNewValue());
+      	        }
+      	    }
+      	);
+      	table.setEditable(true);
     	
     	//do du lieu
     	onResetBtn();

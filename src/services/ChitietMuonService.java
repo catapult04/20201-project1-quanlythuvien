@@ -13,6 +13,25 @@ import model.MuontraBean;
 import model.MuontraModel;
 
 public class ChitietMuonService {
+	public void setTienphatGhichuById(String maMT, String maSach, int tienphat, String ghichu) {
+String sql = "UPDATE chitiet_muon_minhhn set Tienphat_20183955= ?, Ghichu_20183955= ? where MaMT_20183955 = ? and Masach_20183955 = ?";
+        
+        try{
+        	PreparedStatement preparedStatement = ConnService.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        	preparedStatement.setInt(1, tienphat);
+        	preparedStatement.setString(2, ghichu);
+            preparedStatement.setString(3, maMT);
+            preparedStatement.setString(4, maSach);
+            
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            UtilService.success();
+        } catch (Exception ex){
+            ex.printStackTrace();
+            UtilService.fail();
+        }
+	}
+	
 	public String getIdByMasach(String masach) {
 		try {
 			String sql = "select MaMT_20183955 from chitiet_muon_minhhn where Masach_20183955='" + masach + "' and Ngaytra_20183955 is NULL";

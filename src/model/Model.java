@@ -70,7 +70,7 @@ public class Model {
 	        			obj.setField(0, obj.oldId);
 	        	} 
 	        	// anything else?
-	        } else {}
+	        } 
 		});
 		saveBtn.setText("Lưu");
 		saveBtn.autosize();

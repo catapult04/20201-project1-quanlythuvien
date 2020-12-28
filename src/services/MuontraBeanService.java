@@ -31,6 +31,31 @@ public class MuontraBeanService {
 		}
 	}
 	
+	public ObservableList<MuontraBean> getQuaHan(){
+		ObservableList<MuontraBean> mtBeanList = FXCollections.observableArrayList();
+		try {
+			String sql = "select * from muontra_minhhn where Ngayhentra_20183955 < ?";
+			PreparedStatement preparedStatement = ConnService.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, MainQLTV.nowString);
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			DocgiaModelService dgModelService = new DocgiaModelService();
+			ThuthuModelService ttModelService = new ThuthuModelService();
+			
+			while(rs.next()) {
+				MuontraModel mtModel = new MuontraModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getDate(5), rs.getInt(6));
+				String tenDG = dgModelService.getNameById(mtModel.getMaDG_20183955());
+				String tenTT = ttModelService.getNameById(mtModel.getMaTT_20183955());
+				MuontraBean mtBean = new MuontraBean(mtModel, tenDG, tenTT);
+				mtBeanList.add(mtBean);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return mtBeanList;
+	}
+	
 	public ObservableList<String> getAllMaDG(){
 		ObservableList<String> list = FXCollections.observableArrayList();
 		try {
@@ -80,28 +105,7 @@ public class MuontraBeanService {
 		return mtBeanList;
 	}
 	
-	public ObservableList<MuontraBean> getQuaHan(){
-		ObservableList<MuontraBean> mtBeanList = FXCollections.observableArrayList();
-		try {
-			String sql = "select * from muontra_minhhn where Ngayhentra_20183955 < ?";
-			PreparedStatement preparedStatement = ConnService.conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			ResultSet rs = preparedStatement.executeQuery();
-			
-			DocgiaModelService dgModelService = new DocgiaModelService();
-			ThuthuModelService ttModelService = new ThuthuModelService();
-			
-			while(rs.next()) {
-				MuontraModel mtModel = new MuontraModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getDate(5), rs.getInt(6));
-				String tenDG = dgModelService.getNameById(mtModel.getMaDG_20183955());
-				String tenTT = ttModelService.getNameById(mtModel.getMaTT_20183955());
-				MuontraBean mtBean = new MuontraBean(mtModel, tenDG, tenTT);
-				mtBeanList.add(mtBean);
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return mtBeanList;
-	}
+	
 	
 	public boolean insert(MuontraBean mtBean) {
 		try {			

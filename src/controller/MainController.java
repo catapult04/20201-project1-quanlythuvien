@@ -5,21 +5,21 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
-
 import application.MainQLTV;
 import model.DocgiaModel;
 import model.Model;
 import model.MuontraBean;
 import model.SachModel;
+import model.ThongkeModel;
 import model.ThuthuModel;
 import services.ChitietMuonService;
 import services.ConnService;
 import services.MuontraBeanService;
 import services.SachModelService;
 import services.ThaotacFile;
+import services.ThongkeService;
 import services.UtilService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -30,7 +30,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -47,8 +49,6 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.util.Callback;
 
 public class MainController implements Initializable {
 	public MainController() {
@@ -61,13 +61,9 @@ public class MainController implements Initializable {
 	 ***************/
 	@Override //DOAN MA KHOI TAO MOI THU
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		SachModelService sachService = new SachModelService();
-		sachService.updateTrangthai_Tienphat();
+		onTabSach();
 		
-		buildHomeTab();
-		
-		ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
-		buildRadioBtnsSach();
+		onTabHome();
 		
 		buildMT();
 		
@@ -77,11 +73,13 @@ public class MainController implements Initializable {
 		ConnService.buildTable("thuthu_minhhn", tableTT, ThuthuModel.LIST_FIELDS_NAME, "select * from thuthu_minhhn");
 		buildRadioBtnsTT();
 		buildAccountInfo();
+		
+		formatTableTK();
 	}	
 	
 	
 	/*******************
-     * Home tab
+     * home tab
      *******************/
 	@FXML private Label helloLabel;
 	@FXML private Label usernameLabel;
@@ -94,7 +92,7 @@ public class MainController implements Initializable {
 	@FXML private Label num6;
 	@FXML private Label datenow;
 	
-	public void buildHomeTab() {
+	public void onTabHome() {
 		helloLabel.setText("Xin chào, " + MainQLTV.tenTT);
 		usernameLabel.setText(MainQLTV.username);
 		num1.setText(String.valueOf(ConnService.count("select count(Masach_20183955) from sach_minhhn")));
@@ -166,6 +164,13 @@ public class MainController implements Initializable {
     
     @FXML private Label countSach;
     @FXML private Button countBtn;
+    
+    public void onTabSach() {
+    	SachModelService sachService = new SachModelService();
+		sachService.updateTrangthai_Tienphat();
+		ConnService.buildTable("sach_minhhn", tableSach, SachModel.LIST_FIELDS_NAME, "select * from sach_minhhn");
+		buildRadioBtnsSach();
+    }
     
     public void onTraBtnSach() {
     	ChitietMuonService ctMTService = new ChitietMuonService();
@@ -640,7 +645,95 @@ public class MainController implements Initializable {
     
     
     /************************
-     * Thong ke Tab
+     * thong ke tab
      ************************/ 
-   
+    public static ObservableList<ThongkeModel> dataTK;
+    
+    @FXML private TableView<ThongkeModel> tableTK;
+    @FXML private TableColumn<ThongkeModel, String> c1TK;
+    @FXML private TableColumn<ThongkeModel, String> c2TK;
+    @FXML private TableColumn<ThongkeModel, String> c3TK;
+    
+    @FXML private Label tenbangTK;
+    @FXML private Label sumTK;
+    @FXML private PieChart pieChart;
+    
+    @FXML private Button theloaiBtn;
+    @FXML private Button NXBBtn;
+    @FXML private Button namXBBtn;
+    @FXML private Button tacgiaBtn;
+    @FXML private Button statusBtn;
+    @FXML private Button phieuTheoDGBtn;
+    @FXML private Button DGTheoNSBtn;
+    
+    public void formatTableTK() {
+    	c1TK.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getNoidung()));
+    	c2TK.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getSoluong())));
+    	c3TK.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getTile())));
+    }
+    
+    public void buildPieChart() {
+    	pieChart.getData().clear();
+    	for(int i=0; i<dataTK.size(); i++) {
+    		PieChart.Data slice = new PieChart.Data(dataTK.get(i).getNoidung(), dataTK.get(i).getSoluong());
+    		pieChart.getData().add(slice);
+    	}
+        pieChart.setLegendSide(Side.LEFT);
+    }
+    
+    public void onTheloaiBtn() {
+    	ThongkeService tkser = new ThongkeService();
+    	dataTK = tkser.thongkeSachTheoTheloai();
+    	tableTK.setItems(dataTK);
+    	sumTK.setText(String.valueOf(tkser.total));
+    	buildPieChart();
+    	tenbangTK.setText(theloaiBtn.getText());
+    }
+    
+    public void onNXBBtn() {
+    	ThongkeService tkser = new ThongkeService();
+    	dataTK = tkser.thongkeSach("NhaXB_20183955");
+    	tableTK.setItems(dataTK);
+    	sumTK.setText(String.valueOf(tkser.total));
+    }
+    
+    public void onNamXBBtn() {
+    	ThongkeService tkser = new ThongkeService();
+    	dataTK = tkser.thongkeSach("NamXB_20183955");
+    	tableTK.setItems(dataTK);
+    	sumTK.setText(String.valueOf(tkser.total));
+    	buildPieChart();
+    }
+    
+    public void onTacgiaBtn() {
+    	ThongkeService tkser = new ThongkeService();
+    	dataTK = tkser.thongkeSach("Tacgia_20183955");
+    	tableTK.setItems(dataTK);
+    	sumTK.setText(String.valueOf(tkser.total));
+    	buildPieChart();
+    }
+    
+    public void onStatusBtn() {
+    	ThongkeService tkser = new ThongkeService();
+    	dataTK = tkser.thongkeSach("Trangthaisach_20183955");
+    	tableTK.setItems(dataTK);
+    	sumTK.setText(String.valueOf(tkser.total));
+    	buildPieChart();
+    }
+    
+    public void onPhieuTheoDGBtn() {
+    	ThongkeService tkser = new ThongkeService();
+    	dataTK = tkser.thongkePhieu("MaDG_20183955");
+    	tableTK.setItems(dataTK);
+    	sumTK.setText(String.valueOf(tkser.total));
+    	buildPieChart();
+    }
+    
+    public void onDGTheoNSBtn() {
+    	ThongkeService tkser = new ThongkeService();
+    	dataTK = tkser.thongkeDG("Namsinh_20183955");
+    	tableTK.setItems(dataTK);
+    	sumTK.setText(String.valueOf(tkser.total));
+    	buildPieChart();
+    }
 }

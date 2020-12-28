@@ -8,11 +8,14 @@ import com.jfoenix.controls.JFXButton;
 
 import controller.DetailMTController;
 import controller.MainController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Alert.AlertType;
 import services.ChitietMuonService;
+import services.ConnService;
 import services.SachModelService;
 import services.UtilService;
 
@@ -60,7 +63,13 @@ public class ChitietMuonModel {
 		saveBtn.setText("Lưu");
 		saveBtn.setStyle("-fx-background-color: #CCFF66");
 		saveBtn.setOnAction(event -> {
-			
+			Alert a = new Alert(AlertType.CONFIRMATION);
+			a.setHeaderText("Lưu các thay đổi?");
+			Optional<ButtonType> option = a.showAndWait();
+	        if (option.get() == ButtonType.OK) {
+	        	ChitietMuonService ser = new ChitietMuonService();
+	        	ser.setTienphatGhichuById(this.MaMT_20183955, this.Masach_20183955, this.getTienphat_20183955(), this.getGhichu_20183955());
+	        }	
 		});
 		saveBtn.autosize();
 		
@@ -71,12 +80,9 @@ public class ChitietMuonModel {
 	
 	public void setField(int pos, String value) {
 		try {
-			switch(pos) {
-			case 1: setMaMT_20183955(value);
-			case 2: setMasach_20183955(value);
-			case 3: setNgaytra_20183955(new SimpleDateFormat("yyyy-MM-dd").parse(value));
-			case 4: setTienphat_20183955(Integer.parseInt(value));	
-			default: setGhichu_20183955(value);
+			switch(pos+1) {
+			case 3: setTienphat_20183955(Integer.parseInt(value)); break;	
+			case 4: setGhichu_20183955(value); break;
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
