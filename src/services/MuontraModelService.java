@@ -10,6 +10,28 @@ import java.sql.Date;
 import model.MuontraModel;
 
 public class MuontraModelService {
+	public boolean insert(MuontraModel model)  {
+        String query = "INSERT INTO muontra_minhhn(MaMT_20183955, MaDG_20183955, MaTT_20183955, Ngaymuon_20183955, Ngayhentra_20183955, Tiencoc_20183955, )"
+                + " values (?, ?, ?, ?, ?, ?)";
+        try {
+        	PreparedStatement preparedStatement = ConnService.conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, model.getMaMT_20183955());
+            preparedStatement.setString(2, model.getMaDG_20183955());
+            preparedStatement.setString(3, model.getMaTT_20183955());
+            preparedStatement.setDate(4, (Date) model.getNgaymuon_20183955());
+            preparedStatement.setDate(5, (Date) model.getNgayhentra_20183955());
+            preparedStatement.setInt(6, model.getTiencoc_20183955());
+            
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            
+            return true;
+        } catch (Exception e) {
+        	e.printStackTrace();
+            return false;
+        }
+    }
+	
 	public ObservableList<MuontraModel> getAll(){
 		ObservableList<MuontraModel> list = FXCollections.observableArrayList();
 		try {

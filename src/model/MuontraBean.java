@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import services.MuontraBeanService;
 import services.UtilService;
 
-public class MuontraBean{
+public class MuontraBean extends Model{
 	private MuontraModel mtModel;
 	private String TenDG_20183955;
 	private String TenTT_20183955;

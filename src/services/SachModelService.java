@@ -1,11 +1,37 @@
 package services;
+
 import javafx.collections.FXCollections;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javafx.collections.ObservableList;
+import model.SachModel;
 
 public class SachModelService {
+	public boolean insert(SachModel model)  {
+        String query = "INSERT INTO sach_minhhn(Masach_20183955, Tensach_20183955, Tacgia_20183955, NhaXB_20183955, NamXB_20183955, Dongia_20183955, Trangthaisach_20183955, Gioithieu_20183955)"
+                + " values (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+        	PreparedStatement preparedStatement = ConnService.conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, model.getMasach_20183955());
+            preparedStatement.setString(2, model.getTensach_20183955());
+            preparedStatement.setString(3, model.getTacgia_20183955());
+            preparedStatement.setString(4, model.getNhaXB_20183955());
+            preparedStatement.setString(5, model.getNamXB_20183955());
+            preparedStatement.setInt(6, Integer.parseInt(model.getDongia_20183955()));
+            preparedStatement.setString(7, model.getTrangthaisach_20183955());
+            preparedStatement.setString(8, model.getGioithieu_20183955());
+            
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            
+            return true;
+        } catch (Exception e) {
+        	e.printStackTrace();
+            return false;
+        }
+    }
+	
 	public ObservableList<String> getAllId(){
 		ObservableList<String> list = FXCollections.observableArrayList();
 		try {

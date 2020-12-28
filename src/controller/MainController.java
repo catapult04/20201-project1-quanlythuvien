@@ -249,11 +249,12 @@ public class MainController implements Initializable {
     }
     
     public void onAdd2BtnSach(ActionEvent event) {
-//    	ThaotacFile.ghiFile();
+    	UtilService.popUp("ThemTuFile");
+    	onResetBtnSach();
     }
     
     public void onXuatBtnSach() {
-    	ThaotacFile.ghiFileSach("bangsach", dataSach);
+    	ThaotacFile.ghiFile("bangsach", dataSach);
     }
     
     public void onCountBtn() {
@@ -325,11 +326,12 @@ public class MainController implements Initializable {
     }
     
     public void onXuatBtnMT() {
-    	
+    	ThaotacFile.ghiFile("bangMT", dataMT);
     }
     
     public void onAdd2BtnMT() {
-    	
+    	UtilService.popUp("ThemTuFile");
+    	onResetBtnMT();
     }
     
     public void buildComboBoxMT() {
@@ -489,11 +491,12 @@ public class MainController implements Initializable {
     }
     
     public void onAdd2BtnDG(ActionEvent event) {
-    	
+    	UtilService.popUp("ThemTuFile");
+    	onResetBtnDG();
     }
     
     public void onXuatBtnDG() {
-    	
+    	ThaotacFile.ghiFile("bangDG", dataDG);
     }
 
     /************************
@@ -539,7 +542,7 @@ public class MainController implements Initializable {
     @FXML private Button xuatBtnTT;
     
     public void onXuatBtnTT() {
-    	
+    	ThaotacFile.ghiFile("bangTT", dataTT);
     }
     
     public void onSearchBtnTT() {

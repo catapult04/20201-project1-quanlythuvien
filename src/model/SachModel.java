@@ -45,6 +45,10 @@ public class SachModel extends Model{
 		}
 	}
 	
+	public SachModel() {
+		
+	}
+	
 	public SachModel(ObservableList<String> input) {
 		super();
 		setMasach_20183955(input.get(0));
